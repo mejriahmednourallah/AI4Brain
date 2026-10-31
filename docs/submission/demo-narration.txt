@@ -1,0 +1,27 @@
+# AI4BRAIN synthetic demo narration
+
+Voice: synthetic English speech generated locally with Windows System.Speech / Microsoft David Desktop. No external service, provider, or network call is used for narration. Keep the visible disclosure on screen: “Automated QA data - software demonstration only; not participant or cognitive-performance data.” This narration describes only actions and values visible in the live recording; revise wording if the actual screen differs.
+
+## 01 | 0:00-0:35 | Overview and QA disclosure
+
+This is AI4BRAIN running locally. The visible profile comes from automated software checks, not a participant. I will follow the saved task evidence into a plan, local coach response, completed practice decision, and the Quest and Brain Twin views. These short task results are preliminary and high uncertainty. They do not describe a person or a validated ability.
+
+## 02 | 0:35-1:05 | Evidence and history
+
+Each task has its own evidence count and scoring rule. The event history keeps the response and server evaluation together. Exact retries recover the saved result rather than adding another attempt. Interrupted and assisted attempts remain auditable but do not become valid unassisted baseline evidence. Missing evidence stays unassessed, not zero.
+
+## 03 | 1:05-1:50 | Plan and selection reasons
+
+The plan follows the learner's selected goal and saved evidence. The selector weighs task gap at forty percent, goal at twenty-five percent, recency at twenty percent, and uncertainty at fifteen percent. These are policy weights, not ability or confidence percentages. The plan keeps its steps, budget, reasons, tiers, and supporting evidence so a reviewer can inspect why a next step was selected.
+
+## 04 | 1:50-2:35 | Local coach, learner-chosen action and collaboration evidence
+
+The companion explains the current recommendation from local evidence and states its uncertainty. It does not create a score or choose a new task. This request uses the local fallback and does not call a remote provider. The coach offers actions, and the learner chooses one: selecting it records that single choice and opens the matching practice screen. If local speech is enabled, the spoken text is exactly the written reply, synthesised on this device, and it stops during scored or timed work. Genuine collaboration opportunities are tied to a specific prompt and saved interaction; the cited record can be inspected before answering, and an unanswered opportunity remains unassessed rather than being inferred from message volume.
+
+## 05 | 2:35-3:20 | Completed practice decision
+
+This completed block contains four distinct attempts at the same task family and tier. The saved decision follows that task's success rule and links to its supporting events. A hint or interruption cannot inflate the unassisted decision window. The practice result is separate from the fixed baseline score. The displayed outcome is software QA, not a participant result.
+
+## 06 | 3:20-4:15 | Quest, Brain Twin, and limits
+
+Quest changes how engagement is presented; XP and levels are not cognitive scores. The Brain Twin graph is derived from the local evidence store, and the optional graph database mirrors that source. These task sets have not been psychometrically validated, browser timing is approximate, and no diagnosis or cross-task ranking is intended. Camera and microphone are not required. This is a software demonstration, not clinical or human-participant validation.

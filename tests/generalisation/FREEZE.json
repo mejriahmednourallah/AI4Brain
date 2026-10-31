@@ -1,0 +1,6 @@
+{
+  "frozen_at": "2026-10-22T13:13:30.726123+00:00",
+  "source_sha256": "8eef28aeeef9644af8b9084e0238f5c4ac7884ecab821e48fb23961d70316332",
+  "manifest_sha256": "d891ebc0f43ea64fb78c9ce00152d18de084526f37786de8555a80a887d2003c",
+  "split_policy": "Every third case is reserved. The reserved pool is not executed until the candidate source hash matches FREEZE.json."
+}

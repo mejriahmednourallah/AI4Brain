@@ -1,0 +1,1305 @@
+{
+  "manifest_version": "generalisation-manifest-v1",
+  "created_for": "AI4BRAIN generalisation workstream (G0)",
+  "tracks": [
+    "variations",
+    "situations",
+    "constraints"
+  ],
+  "counts": {
+    "variations": {
+      "total": 30,
+      "development": 20,
+      "reserved": 10
+    },
+    "situations": {
+      "total": 12,
+      "development": 8,
+      "reserved": 4
+    },
+    "constraints": {
+      "total": 30,
+      "development": 20,
+      "reserved": 10
+    }
+  },
+  "split_policy": "Every third case is reserved. The reserved pool is not executed until the candidate source hash matches FREEZE.json.",
+  "cases": [
+    {
+      "id": "G001",
+      "track": "variations",
+      "kind": "trial_scoring",
+      "split": "development",
+      "scenario": {
+        "exercise_id": "EX-01",
+        "dimension": "working_memory",
+        "phase": "baseline",
+        "correct": true,
+        "item_index": 0
+      },
+      "expectation": {
+        "kind": "trial_matches_response",
+        "correct": true
+      },
+      "note": "Memory baseline trial 0 answered correctly must be evaluated as correct by the server."
+    },
+    {
+      "id": "G002",
+      "track": "variations",
+      "kind": "trial_scoring",
+      "split": "development",
+      "scenario": {
+        "exercise_id": "EX-01",
+        "dimension": "working_memory",
+        "phase": "baseline",
+        "correct": true,
+        "item_index": 1
+      },
+      "expectation": {
+        "kind": "trial_matches_response",
+        "correct": true
+      },
+      "note": "Memory baseline trial 1 answered correctly must be evaluated as correct by the server."
+    },
+    {
+      "id": "G003",
+      "track": "variations",
+      "kind": "trial_scoring",
+      "split": "reserved",
+      "scenario": {
+        "exercise_id": "EX-01",
+        "dimension": "working_memory",
+        "phase": "baseline",
+        "correct": false,
+        "item_index": 0
+      },
+      "expectation": {
+        "kind": "trial_matches_response",
+        "correct": false
+      },
+      "note": "Memory baseline trial 0 answered incorrectly must be evaluated as incorrect by the server."
+    },
+    {
+      "id": "G004",
+      "track": "variations",
+      "kind": "trial_scoring",
+      "split": "development",
+      "scenario": {
+        "exercise_id": "EX-01",
+        "dimension": "working_memory",
+        "phase": "baseline",
+        "correct": false,
+        "item_index": 1
+      },
+      "expectation": {
+        "kind": "trial_matches_response",
+        "correct": false
+      },
+      "note": "Memory baseline trial 1 answered incorrectly must be evaluated as incorrect by the server."
+    },
+    {
+      "id": "G005",
+      "track": "variations",
+      "kind": "exclusion",
+      "split": "development",
+      "scenario": {
+        "exercise_id": "EX-01",
+        "dimension": "working_memory",
+        "phase": "baseline",
+        "perturbation": "visibility_interrupted",
+        "correct": true
+      },
+      "expectation": {
+        "kind": "event_not_unassisted_valid",
+        "perturbation": "visibility_interrupted"
+      },
+      "note": "A correct Memory baseline response recorded with interrupted context must stay excluded from valid unassisted evidence."
+    },
+    {
+      "id": "G006",
+      "track": "variations",
+      "kind": "exclusion",
+      "split": "reserved",
+      "scenario": {
+        "exercise_id": "EX-01",
+        "dimension": "working_memory",
+        "phase": "baseline",
+        "perturbation": "hint",
+        "correct": true
+      },
+      "expectation": {
+        "kind": "event_not_unassisted_valid",
+        "perturbation": "hint"
+      },
+      "note": "A correct Memory baseline response recorded with assisted context must stay excluded from valid unassisted evidence."
+    },
+    {
+      "id": "G007",
+      "track": "variations",
+      "kind": "trial_scoring",
+      "split": "development",
+      "scenario": {
+        "exercise_id": "EX-02",
+        "dimension": "reasoning",
+        "phase": "baseline",
+        "correct": true,
+        "item_index": 0
+      },
+      "expectation": {
+        "kind": "trial_matches_response",
+        "correct": true
+      },
+      "note": "Reasoning baseline trial 0 answered correctly must be evaluated as correct by the server."
+    },
+    {
+      "id": "G008",
+      "track": "variations",
+      "kind": "trial_scoring",
+      "split": "development",
+      "scenario": {
+        "exercise_id": "EX-02",
+        "dimension": "reasoning",
+        "phase": "baseline",
+        "correct": true,
+        "item_index": 1
+      },
+      "expectation": {
+        "kind": "trial_matches_response",
+        "correct": true
+      },
+      "note": "Reasoning baseline trial 1 answered correctly must be evaluated as correct by the server."
+    },
+    {
+      "id": "G009",
+      "track": "variations",
+      "kind": "trial_scoring",
+      "split": "reserved",
+      "scenario": {
+        "exercise_id": "EX-02",
+        "dimension": "reasoning",
+        "phase": "baseline",
+        "correct": false,
+        "item_index": 0
+      },
+      "expectation": {
+        "kind": "trial_matches_response",
+        "correct": false
+      },
+      "note": "Reasoning baseline trial 0 answered incorrectly must be evaluated as incorrect by the server."
+    },
+    {
+      "id": "G010",
+      "track": "variations",
+      "kind": "trial_scoring",
+      "split": "development",
+      "scenario": {
+        "exercise_id": "EX-02",
+        "dimension": "reasoning",
+        "phase": "baseline",
+        "correct": false,
+        "item_index": 1
+      },
+      "expectation": {
+        "kind": "trial_matches_response",
+        "correct": false
+      },
+      "note": "Reasoning baseline trial 1 answered incorrectly must be evaluated as incorrect by the server."
+    },
+    {
+      "id": "G011",
+      "track": "variations",
+      "kind": "exclusion",
+      "split": "development",
+      "scenario": {
+        "exercise_id": "EX-02",
+        "dimension": "reasoning",
+        "phase": "baseline",
+        "perturbation": "visibility_interrupted",
+        "correct": true
+      },
+      "expectation": {
+        "kind": "event_not_unassisted_valid",
+        "perturbation": "visibility_interrupted"
+      },
+      "note": "A correct Reasoning baseline response recorded with interrupted context must stay excluded from valid unassisted evidence."
+    },
+    {
+      "id": "G012",
+      "track": "variations",
+      "kind": "exclusion",
+      "split": "reserved",
+      "scenario": {
+        "exercise_id": "EX-02",
+        "dimension": "reasoning",
+        "phase": "baseline",
+        "perturbation": "hint",
+        "correct": true
+      },
+      "expectation": {
+        "kind": "event_not_unassisted_valid",
+        "perturbation": "hint"
+      },
+      "note": "A correct Reasoning baseline response recorded with assisted context must stay excluded from valid unassisted evidence."
+    },
+    {
+      "id": "G013",
+      "track": "variations",
+      "kind": "trial_scoring",
+      "split": "development",
+      "scenario": {
+        "exercise_id": "EX-03",
+        "dimension": "attention_inhibition",
+        "phase": "baseline",
+        "correct": true,
+        "item_index": 0
+      },
+      "expectation": {
+        "kind": "trial_matches_response",
+        "correct": true
+      },
+      "note": "Attention baseline trial 0 answered correctly must be evaluated as correct by the server."
+    },
+    {
+      "id": "G014",
+      "track": "variations",
+      "kind": "trial_scoring",
+      "split": "development",
+      "scenario": {
+        "exercise_id": "EX-03",
+        "dimension": "attention_inhibition",
+        "phase": "baseline",
+        "correct": true,
+        "item_index": 1
+      },
+      "expectation": {
+        "kind": "trial_matches_response",
+        "correct": true
+      },
+      "note": "Attention baseline trial 1 answered correctly must be evaluated as correct by the server."
+    },
+    {
+      "id": "G015",
+      "track": "variations",
+      "kind": "trial_scoring",
+      "split": "reserved",
+      "scenario": {
+        "exercise_id": "EX-03",
+        "dimension": "attention_inhibition",
+        "phase": "baseline",
+        "correct": false,
+        "item_index": 0
+      },
+      "expectation": {
+        "kind": "trial_matches_response",
+        "correct": false
+      },
+      "note": "Attention baseline trial 0 answered incorrectly must be evaluated as incorrect by the server."
+    },
+    {
+      "id": "G016",
+      "track": "variations",
+      "kind": "trial_scoring",
+      "split": "development",
+      "scenario": {
+        "exercise_id": "EX-03",
+        "dimension": "attention_inhibition",
+        "phase": "baseline",
+        "correct": false,
+        "item_index": 1
+      },
+      "expectation": {
+        "kind": "trial_matches_response",
+        "correct": false
+      },
+      "note": "Attention baseline trial 1 answered incorrectly must be evaluated as incorrect by the server."
+    },
+    {
+      "id": "G017",
+      "track": "variations",
+      "kind": "exclusion",
+      "split": "development",
+      "scenario": {
+        "exercise_id": "EX-03",
+        "dimension": "attention_inhibition",
+        "phase": "baseline",
+        "perturbation": "visibility_interrupted",
+        "correct": true
+      },
+      "expectation": {
+        "kind": "event_not_unassisted_valid",
+        "perturbation": "visibility_interrupted"
+      },
+      "note": "A correct Attention baseline response recorded with interrupted context must stay excluded from valid unassisted evidence."
+    },
+    {
+      "id": "G018",
+      "track": "variations",
+      "kind": "exclusion",
+      "split": "reserved",
+      "scenario": {
+        "exercise_id": "EX-03",
+        "dimension": "attention_inhibition",
+        "phase": "baseline",
+        "perturbation": "hint",
+        "correct": true
+      },
+      "expectation": {
+        "kind": "event_not_unassisted_valid",
+        "perturbation": "hint"
+      },
+      "note": "A correct Attention baseline response recorded with assisted context must stay excluded from valid unassisted evidence."
+    },
+    {
+      "id": "G019",
+      "track": "variations",
+      "kind": "trial_scoring",
+      "split": "development",
+      "scenario": {
+        "exercise_id": "EX-04",
+        "dimension": "flexibility",
+        "phase": "baseline",
+        "correct": true,
+        "item_index": 0
+      },
+      "expectation": {
+        "kind": "trial_matches_response",
+        "correct": true
+      },
+      "note": "Flexibility baseline trial 0 answered correctly must be evaluated as correct by the server."
+    },
+    {
+      "id": "G020",
+      "track": "variations",
+      "kind": "trial_scoring",
+      "split": "development",
+      "scenario": {
+        "exercise_id": "EX-04",
+        "dimension": "flexibility",
+        "phase": "baseline",
+        "correct": true,
+        "item_index": 1
+      },
+      "expectation": {
+        "kind": "trial_matches_response",
+        "correct": true
+      },
+      "note": "Flexibility baseline trial 1 answered correctly must be evaluated as correct by the server."
+    },
+    {
+      "id": "G021",
+      "track": "variations",
+      "kind": "trial_scoring",
+      "split": "reserved",
+      "scenario": {
+        "exercise_id": "EX-04",
+        "dimension": "flexibility",
+        "phase": "baseline",
+        "correct": false,
+        "item_index": 0
+      },
+      "expectation": {
+        "kind": "trial_matches_response",
+        "correct": false
+      },
+      "note": "Flexibility baseline trial 0 answered incorrectly must be evaluated as incorrect by the server."
+    },
+    {
+      "id": "G022",
+      "track": "variations",
+      "kind": "trial_scoring",
+      "split": "development",
+      "scenario": {
+        "exercise_id": "EX-04",
+        "dimension": "flexibility",
+        "phase": "baseline",
+        "correct": false,
+        "item_index": 1
+      },
+      "expectation": {
+        "kind": "trial_matches_response",
+        "correct": false
+      },
+      "note": "Flexibility baseline trial 1 answered incorrectly must be evaluated as incorrect by the server."
+    },
+    {
+      "id": "G023",
+      "track": "variations",
+      "kind": "exclusion",
+      "split": "development",
+      "scenario": {
+        "exercise_id": "EX-04",
+        "dimension": "flexibility",
+        "phase": "baseline",
+        "perturbation": "visibility_interrupted",
+        "correct": true
+      },
+      "expectation": {
+        "kind": "event_not_unassisted_valid",
+        "perturbation": "visibility_interrupted"
+      },
+      "note": "A correct Flexibility baseline response recorded with interrupted context must stay excluded from valid unassisted evidence."
+    },
+    {
+      "id": "G024",
+      "track": "variations",
+      "kind": "exclusion",
+      "split": "reserved",
+      "scenario": {
+        "exercise_id": "EX-04",
+        "dimension": "flexibility",
+        "phase": "baseline",
+        "perturbation": "hint",
+        "correct": true
+      },
+      "expectation": {
+        "kind": "event_not_unassisted_valid",
+        "perturbation": "hint"
+      },
+      "note": "A correct Flexibility baseline response recorded with assisted context must stay excluded from valid unassisted evidence."
+    },
+    {
+      "id": "G025",
+      "track": "variations",
+      "kind": "trial_scoring",
+      "split": "development",
+      "scenario": {
+        "exercise_id": "EX-05",
+        "dimension": "planning",
+        "phase": "baseline",
+        "correct": true,
+        "item_index": 0
+      },
+      "expectation": {
+        "kind": "trial_matches_response",
+        "correct": true
+      },
+      "note": "Planning baseline trial 0 answered correctly must be evaluated as correct by the server."
+    },
+    {
+      "id": "G026",
+      "track": "variations",
+      "kind": "trial_scoring",
+      "split": "development",
+      "scenario": {
+        "exercise_id": "EX-05",
+        "dimension": "planning",
+        "phase": "baseline",
+        "correct": true,
+        "item_index": 1
+      },
+      "expectation": {
+        "kind": "trial_matches_response",
+        "correct": true
+      },
+      "note": "Planning baseline trial 1 answered correctly must be evaluated as correct by the server."
+    },
+    {
+      "id": "G027",
+      "track": "variations",
+      "kind": "trial_scoring",
+      "split": "reserved",
+      "scenario": {
+        "exercise_id": "EX-05",
+        "dimension": "planning",
+        "phase": "baseline",
+        "correct": false,
+        "item_index": 0
+      },
+      "expectation": {
+        "kind": "trial_matches_response",
+        "correct": false
+      },
+      "note": "Planning baseline trial 0 answered incorrectly must be evaluated as incorrect by the server."
+    },
+    {
+      "id": "G028",
+      "track": "variations",
+      "kind": "trial_scoring",
+      "split": "development",
+      "scenario": {
+        "exercise_id": "EX-05",
+        "dimension": "planning",
+        "phase": "baseline",
+        "correct": false,
+        "item_index": 1
+      },
+      "expectation": {
+        "kind": "trial_matches_response",
+        "correct": false
+      },
+      "note": "Planning baseline trial 1 answered incorrectly must be evaluated as incorrect by the server."
+    },
+    {
+      "id": "G029",
+      "track": "variations",
+      "kind": "exclusion",
+      "split": "development",
+      "scenario": {
+        "exercise_id": "EX-05",
+        "dimension": "planning",
+        "phase": "baseline",
+        "perturbation": "visibility_interrupted",
+        "correct": true
+      },
+      "expectation": {
+        "kind": "event_not_unassisted_valid",
+        "perturbation": "visibility_interrupted"
+      },
+      "note": "A correct Planning baseline response recorded with interrupted context must stay excluded from valid unassisted evidence."
+    },
+    {
+      "id": "G030",
+      "track": "variations",
+      "kind": "exclusion",
+      "split": "reserved",
+      "scenario": {
+        "exercise_id": "EX-05",
+        "dimension": "planning",
+        "phase": "baseline",
+        "perturbation": "hint",
+        "correct": true
+      },
+      "expectation": {
+        "kind": "event_not_unassisted_valid",
+        "perturbation": "hint"
+      },
+      "note": "A correct Planning baseline response recorded with assisted context must stay excluded from valid unassisted evidence."
+    },
+    {
+      "id": "G031",
+      "track": "situations",
+      "kind": "empty",
+      "split": "development",
+      "scenario": {
+        "memory_trials": 0
+      },
+      "expectation": {
+        "kind": "recommendation_action",
+        "action": "complete_baseline"
+      },
+      "note": "With no saved evidence the policy must request assessment, not training."
+    },
+    {
+      "id": "G032",
+      "track": "situations",
+      "kind": "partial",
+      "split": "development",
+      "scenario": {
+        "memory_trials": 2
+      },
+      "expectation": {
+        "kind": "recommendation_action",
+        "action": "complete_baseline"
+      },
+      "note": "Two of six Memory trials must still request assessment."
+    },
+    {
+      "id": "G033",
+      "track": "situations",
+      "kind": "interrupted_only",
+      "split": "reserved",
+      "scenario": {
+        "memory_trials": 6,
+        "interrupted": true
+      },
+      "expectation": {
+        "kind": "recommendation_action",
+        "action": "complete_baseline"
+      },
+      "note": "Interrupted trials cannot complete a baseline, so assessment is still required."
+    },
+    {
+      "id": "G034",
+      "track": "situations",
+      "kind": "assisted_baseline",
+      "split": "development",
+      "scenario": {
+        "memory_trials": 6,
+        "hinted": true
+      },
+      "expectation": {
+        "kind": "assisted_baseline_refused"
+      },
+      "note": "A hint cannot be attached to a scored baseline trial, so an assisted baseline attempt is refused and the uncoached baseline stays intact."
+    },
+    {
+      "id": "G035",
+      "track": "situations",
+      "kind": "complete_low",
+      "split": "development",
+      "scenario": {
+        "all_trials": 6,
+        "family_ratios": {
+          "working_memory": 0.25
+        },
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "recommendation_action",
+        "action": "targeted_training"
+      },
+      "note": "A completed baseline enables targeted training and the result must stay provisional."
+    },
+    {
+      "id": "G036",
+      "track": "situations",
+      "kind": "complete_moderate",
+      "split": "reserved",
+      "scenario": {
+        "all_trials": 6,
+        "family_ratios": {
+          "working_memory": 0.5
+        },
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "recommendation_action",
+        "action": "targeted_training"
+      },
+      "note": "A completed mid-range baseline enables targeted training."
+    },
+    {
+      "id": "G037",
+      "track": "situations",
+      "kind": "complete_high",
+      "split": "development",
+      "scenario": {
+        "all_trials": 6,
+        "family_ratios": {
+          "working_memory": 1.0
+        },
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "recommendation_action",
+        "action": "targeted_training"
+      },
+      "note": "A completed strong baseline still schedules the weakest remaining family."
+    },
+    {
+      "id": "G038",
+      "track": "situations",
+      "kind": "goal_planning",
+      "split": "development",
+      "scenario": {
+        "memory_trials": 6,
+        "correct_ratio": 0.5,
+        "goal": "planning"
+      },
+      "expectation": {
+        "kind": "goal_present_in_decision"
+      },
+      "note": "A declared goal must appear in the recorded decision rather than being discarded."
+    },
+    {
+      "id": "G039",
+      "track": "situations",
+      "kind": "all_unassessed_two",
+      "split": "reserved",
+      "scenario": {
+        "memory_trials": 0,
+        "reasoning_trials": 0
+      },
+      "expectation": {
+        "kind": "single_next_family"
+      },
+      "note": "With several unassessed families the policy still resolves exactly one next family."
+    },
+    {
+      "id": "G040",
+      "track": "situations",
+      "kind": "all_complete_equal",
+      "split": "development",
+      "scenario": {
+        "all_trials": 6,
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "single_next_family"
+      },
+      "note": "With every family complete the policy still resolves exactly one next family."
+    },
+    {
+      "id": "G041",
+      "track": "situations",
+      "kind": "unassessed_not_zero",
+      "split": "development",
+      "scenario": {
+        "memory_trials": 0
+      },
+      "expectation": {
+        "kind": "profile_unassessed_not_scored"
+      },
+      "note": "An unassessed family must be reported as unassessed, never as a zero index."
+    },
+    {
+      "id": "G042",
+      "track": "situations",
+      "kind": "baseline_immutable",
+      "split": "reserved",
+      "scenario": {
+        "memory_trials": 6,
+        "correct_ratio": 0.5,
+        "then_training": true
+      },
+      "expectation": {
+        "kind": "baseline_index_unchanged"
+      },
+      "note": "A subsequent training block must not change the fixed baseline index."
+    },
+    {
+      "id": "G043",
+      "track": "constraints",
+      "kind": "budget_bounds",
+      "split": "development",
+      "scenario": {
+        "budget_minutes": 4,
+        "all_trials": 6,
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "plan_within_budget",
+        "budget_minutes": 4
+      },
+      "note": "A 4-minute budget must be respected: planned minutes never exceed it."
+    },
+    {
+      "id": "G044",
+      "track": "constraints",
+      "kind": "availability_subset",
+      "split": "development",
+      "scenario": {
+        "budget_minutes": 4,
+        "available_dimensions": [
+          "working_memory"
+        ],
+        "all_trials": 6,
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "decision_within_availability",
+        "available_dimensions": [
+          "working_memory"
+        ]
+      },
+      "note": "With only Memory available the resolved activity and plan must stay inside that constraint at a 4-minute budget."
+    },
+    {
+      "id": "G045",
+      "track": "constraints",
+      "kind": "availability_subset",
+      "split": "reserved",
+      "scenario": {
+        "budget_minutes": 4,
+        "available_dimensions": [
+          "reasoning"
+        ],
+        "all_trials": 6,
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "decision_within_availability",
+        "available_dimensions": [
+          "reasoning"
+        ]
+      },
+      "note": "With only Reasoning available the resolved activity and plan must stay inside that constraint at a 4-minute budget."
+    },
+    {
+      "id": "G046",
+      "track": "constraints",
+      "kind": "budget_bounds",
+      "split": "development",
+      "scenario": {
+        "budget_minutes": 5,
+        "all_trials": 6,
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "plan_within_budget",
+        "budget_minutes": 5
+      },
+      "note": "A 5-minute budget must be respected: planned minutes never exceed it."
+    },
+    {
+      "id": "G047",
+      "track": "constraints",
+      "kind": "availability_subset",
+      "split": "development",
+      "scenario": {
+        "budget_minutes": 5,
+        "available_dimensions": [
+          "working_memory"
+        ],
+        "all_trials": 6,
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "decision_within_availability",
+        "available_dimensions": [
+          "working_memory"
+        ]
+      },
+      "note": "With only Memory available the resolved activity and plan must stay inside that constraint at a 5-minute budget."
+    },
+    {
+      "id": "G048",
+      "track": "constraints",
+      "kind": "availability_subset",
+      "split": "reserved",
+      "scenario": {
+        "budget_minutes": 5,
+        "available_dimensions": [
+          "reasoning"
+        ],
+        "all_trials": 6,
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "decision_within_availability",
+        "available_dimensions": [
+          "reasoning"
+        ]
+      },
+      "note": "With only Reasoning available the resolved activity and plan must stay inside that constraint at a 5-minute budget."
+    },
+    {
+      "id": "G049",
+      "track": "constraints",
+      "kind": "budget_bounds",
+      "split": "development",
+      "scenario": {
+        "budget_minutes": 8,
+        "all_trials": 6,
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "plan_within_budget",
+        "budget_minutes": 8
+      },
+      "note": "A 8-minute budget must be respected: planned minutes never exceed it."
+    },
+    {
+      "id": "G050",
+      "track": "constraints",
+      "kind": "availability_subset",
+      "split": "development",
+      "scenario": {
+        "budget_minutes": 8,
+        "available_dimensions": [
+          "working_memory"
+        ],
+        "all_trials": 6,
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "decision_within_availability",
+        "available_dimensions": [
+          "working_memory"
+        ]
+      },
+      "note": "With only Memory available the resolved activity and plan must stay inside that constraint at a 8-minute budget."
+    },
+    {
+      "id": "G051",
+      "track": "constraints",
+      "kind": "availability_subset",
+      "split": "reserved",
+      "scenario": {
+        "budget_minutes": 8,
+        "available_dimensions": [
+          "reasoning"
+        ],
+        "all_trials": 6,
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "decision_within_availability",
+        "available_dimensions": [
+          "reasoning"
+        ]
+      },
+      "note": "With only Reasoning available the resolved activity and plan must stay inside that constraint at a 8-minute budget."
+    },
+    {
+      "id": "G052",
+      "track": "constraints",
+      "kind": "budget_bounds",
+      "split": "development",
+      "scenario": {
+        "budget_minutes": 20,
+        "all_trials": 6,
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "plan_within_budget",
+        "budget_minutes": 20
+      },
+      "note": "A 20-minute budget must be respected: planned minutes never exceed it."
+    },
+    {
+      "id": "G053",
+      "track": "constraints",
+      "kind": "availability_subset",
+      "split": "development",
+      "scenario": {
+        "budget_minutes": 20,
+        "available_dimensions": [
+          "working_memory"
+        ],
+        "all_trials": 6,
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "decision_within_availability",
+        "available_dimensions": [
+          "working_memory"
+        ]
+      },
+      "note": "With only Memory available the resolved activity and plan must stay inside that constraint at a 20-minute budget."
+    },
+    {
+      "id": "G054",
+      "track": "constraints",
+      "kind": "availability_subset",
+      "split": "reserved",
+      "scenario": {
+        "budget_minutes": 20,
+        "available_dimensions": [
+          "reasoning"
+        ],
+        "all_trials": 6,
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "decision_within_availability",
+        "available_dimensions": [
+          "reasoning"
+        ]
+      },
+      "note": "With only Reasoning available the resolved activity and plan must stay inside that constraint at a 20-minute budget."
+    },
+    {
+      "id": "G055",
+      "track": "constraints",
+      "kind": "availability_empty",
+      "split": "development",
+      "scenario": {
+        "budget_minutes": 20,
+        "available_dimensions": [],
+        "all_trials": 6,
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "explicit_no_fit"
+      },
+      "note": "An explicit empty availability constraint must produce an explicit no-fit, never a silent reinstatement of every family."
+    },
+    {
+      "id": "G056",
+      "track": "constraints",
+      "kind": "availability_unknown",
+      "split": "development",
+      "scenario": {
+        "budget_minutes": 20,
+        "available_dimensions": [
+          "telepathy"
+        ],
+        "all_trials": 6,
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "unknown_availability_rejected"
+      },
+      "note": "An unsupported availability identifier must be rejected, not ignored."
+    },
+    {
+      "id": "G057",
+      "track": "constraints",
+      "kind": "duplicate_submission",
+      "split": "reserved",
+      "scenario": {
+        "all_trials": 6,
+        "correct_ratio": 0.5,
+        "duplicate": true
+      },
+      "expectation": {
+        "kind": "single_canonical_event"
+      },
+      "note": "Retrying the identical response must leave exactly one canonical trial event."
+    },
+    {
+      "id": "G058",
+      "track": "constraints",
+      "kind": "stale_plan_launch",
+      "split": "development",
+      "scenario": {
+        "all_trials": 6,
+        "correct_ratio": 0.5,
+        "decision_injected": true,
+        "goal": "working_memory"
+      },
+      "expectation": {
+        "kind": "stale_plan_refused"
+      },
+      "note": "A decision recorded outside the plan must make the saved plan stale, so the launch is refused until the plan is reconciled."
+    },
+    {
+      "id": "G059",
+      "track": "constraints",
+      "kind": "tier_ceiling",
+      "split": "development",
+      "scenario": {
+        "all_trials": 6,
+        "correct_ratio": 0.5,
+        "requested_tier": "tier-3"
+      },
+      "expectation": {
+        "kind": "unsupported_tier_refused"
+      },
+      "note": "A launch tier above the recorded decision must be refused, never silently promoted."
+    },
+    {
+      "id": "G060",
+      "track": "constraints",
+      "kind": "quiet_scored_phase",
+      "split": "reserved",
+      "scenario": {
+        "all_trials": 6,
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "coach_refused_in_scored_phase"
+      },
+      "note": "The coach must refuse a scored baseline phase instead of narrating hints."
+    },
+    {
+      "id": "G061",
+      "track": "constraints",
+      "kind": "budget_family_matrix",
+      "split": "development",
+      "scenario": {
+        "budget_minutes": 5,
+        "available_dimensions": [
+          "reasoning"
+        ],
+        "all_trials": 6,
+        "correct_ratio": 0.25
+      },
+      "expectation": {
+        "kind": "plan_within_budget",
+        "budget_minutes": 5
+      },
+      "note": "Reasoning-only schedule at a 5-minute budget must stay inside the budget."
+    },
+    {
+      "id": "G062",
+      "track": "constraints",
+      "kind": "budget_family_matrix",
+      "split": "development",
+      "scenario": {
+        "budget_minutes": 8,
+        "available_dimensions": [
+          "attention_inhibition"
+        ],
+        "all_trials": 6,
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "plan_within_budget",
+        "budget_minutes": 8
+      },
+      "note": "Attention-only schedule at a 8-minute budget must stay inside the budget."
+    },
+    {
+      "id": "G063",
+      "track": "constraints",
+      "kind": "budget_family_matrix",
+      "split": "reserved",
+      "scenario": {
+        "budget_minutes": 20,
+        "available_dimensions": [
+          "flexibility"
+        ],
+        "all_trials": 6,
+        "correct_ratio": 0.75
+      },
+      "expectation": {
+        "kind": "plan_within_budget",
+        "budget_minutes": 20
+      },
+      "note": "Flexibility-only schedule at a 20-minute budget must stay inside the budget."
+    },
+    {
+      "id": "G064",
+      "track": "constraints",
+      "kind": "budget_family_matrix",
+      "split": "development",
+      "scenario": {
+        "budget_minutes": 4,
+        "available_dimensions": [
+          "planning"
+        ],
+        "all_trials": 6,
+        "correct_ratio": 0.0
+      },
+      "expectation": {
+        "kind": "plan_within_budget",
+        "budget_minutes": 4
+      },
+      "note": "Planning-only schedule at a 4-minute budget must stay inside the budget."
+    },
+    {
+      "id": "G065",
+      "track": "constraints",
+      "kind": "budget_family_matrix",
+      "split": "development",
+      "scenario": {
+        "budget_minutes": 5,
+        "available_dimensions": [
+          "working_memory"
+        ],
+        "all_trials": 6,
+        "correct_ratio": 0.25
+      },
+      "expectation": {
+        "kind": "plan_within_budget",
+        "budget_minutes": 5
+      },
+      "note": "Memory-only schedule at a 5-minute budget must stay inside the budget."
+    },
+    {
+      "id": "G066",
+      "track": "constraints",
+      "kind": "budget_family_matrix",
+      "split": "reserved",
+      "scenario": {
+        "budget_minutes": 8,
+        "available_dimensions": [
+          "reasoning"
+        ],
+        "all_trials": 6,
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "plan_within_budget",
+        "budget_minutes": 8
+      },
+      "note": "Reasoning-only schedule at a 8-minute budget must stay inside the budget."
+    },
+    {
+      "id": "G067",
+      "track": "constraints",
+      "kind": "budget_family_matrix",
+      "split": "development",
+      "scenario": {
+        "budget_minutes": 20,
+        "available_dimensions": [
+          "attention_inhibition"
+        ],
+        "all_trials": 6,
+        "correct_ratio": 0.75
+      },
+      "expectation": {
+        "kind": "plan_within_budget",
+        "budget_minutes": 20
+      },
+      "note": "Attention-only schedule at a 20-minute budget must stay inside the budget."
+    },
+    {
+      "id": "G068",
+      "track": "constraints",
+      "kind": "budget_family_matrix",
+      "split": "development",
+      "scenario": {
+        "budget_minutes": 4,
+        "available_dimensions": [
+          "flexibility"
+        ],
+        "all_trials": 6,
+        "correct_ratio": 0.0
+      },
+      "expectation": {
+        "kind": "plan_within_budget",
+        "budget_minutes": 4
+      },
+      "note": "Flexibility-only schedule at a 4-minute budget must stay inside the budget."
+    },
+    {
+      "id": "G069",
+      "track": "constraints",
+      "kind": "budget_family_matrix",
+      "split": "reserved",
+      "scenario": {
+        "budget_minutes": 5,
+        "available_dimensions": [
+          "planning"
+        ],
+        "all_trials": 6,
+        "correct_ratio": 0.25
+      },
+      "expectation": {
+        "kind": "plan_within_budget",
+        "budget_minutes": 5
+      },
+      "note": "Planning-only schedule at a 5-minute budget must stay inside the budget."
+    },
+    {
+      "id": "G070",
+      "track": "constraints",
+      "kind": "budget_family_matrix",
+      "split": "development",
+      "scenario": {
+        "budget_minutes": 8,
+        "available_dimensions": [
+          "working_memory"
+        ],
+        "all_trials": 6,
+        "correct_ratio": 0.5
+      },
+      "expectation": {
+        "kind": "plan_within_budget",
+        "budget_minutes": 8
+      },
+      "note": "Memory-only schedule at a 8-minute budget must stay inside the budget."
+    },
+    {
+      "id": "G071",
+      "track": "constraints",
+      "kind": "budget_family_matrix",
+      "split": "development",
+      "scenario": {
+        "budget_minutes": 20,
+        "available_dimensions": [
+          "reasoning"
+        ],
+        "all_trials": 6,
+        "correct_ratio": 0.75
+      },
+      "expectation": {
+        "kind": "plan_within_budget",
+        "budget_minutes": 20
+      },
+      "note": "Reasoning-only schedule at a 20-minute budget must stay inside the budget."
+    },
+    {
+      "id": "G072",
+      "track": "constraints",
+      "kind": "budget_family_matrix",
+      "split": "reserved",
+      "scenario": {
+        "budget_minutes": 4,
+        "available_dimensions": [
+          "attention_inhibition"
+        ],
+        "all_trials": 6,
+        "correct_ratio": 0.0
+      },
+      "expectation": {
+        "kind": "plan_within_budget",
+        "budget_minutes": 4
+      },
+      "note": "Attention-only schedule at a 4-minute budget must stay inside the budget."
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+﻿.rg-memory-game, .rg-memory-game * { box-sizing: border-box; }
+.rg-memory-game { --rg-memory-ink: #192641; --rg-memory-muted: #66728b; /* Keep the complete board, its frame and carved base inside the short-viewport budget. */ --rg-memory-board-cap: min(64dvh, 636px, calc(100dvh - 346px)); width: 100%; color: var(--rg-memory-ink); font-family: inherit; }
+.rg-memory-unavailable { display: grid; min-height: 120px; place-items: center; border: 1px solid #d7c7a7; border-radius: 16px; padding: 24px; color: #4e3d27; background: #fffaf0; text-align: center; }
+.rg-memory-unavailable p { margin: 0; }
+/* Approved grove scene, kept at its own contrast: the earlier white wash flattened the
+   foliage and stone to near-paper. A light scrim behind the instruction card plus a low
+   vignette keeps the background readable without bleaching it. */
+.rg-memory-scene {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(228px, 292px);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas: "board objective" "board objective" "dock dock";
+  align-items: center;
+  gap: 14px clamp(18px, 3vw, 40px);
+  min-height: min(660px, calc(100dvh - 150px));
+  overflow: hidden;
+  border-radius: 24px;
+  padding: clamp(18px, 3vw, 40px) clamp(16px, 4vw, 52px) 16px;
+  background:
+    linear-gradient(0deg, rgb(18 26 18 / 34%), rgb(18 26 18 / 0%) 44%),
+    radial-gradient(125% 95% at 58% 34%, rgb(16 22 14 / 0%) 36%, rgb(16 22 14 / 30%) 100%),
+    linear-gradient(90deg, rgb(248 247 239 / 3%), rgb(255 254 250 / 7%) 56%, rgb(255 254 250 / 30%)),
+    url('./assets/scene34.png') center 54% / cover;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 62%), 0 16px 42px rgb(47 63 85 / 13%);
+}
+.rg-memory-objective { grid-area: objective; display: grid; grid-template-columns: 44px minmax(0, 1fr); align-items: center; gap: 13px; align-self: start; margin-top: 8px; border: 1px solid rgb(255 255 255 / 95%); border-radius: 21px; padding: 20px 19px; background: rgb(255 254 250 / 94%); box-shadow: 0 12px 32px rgb(36 48 67 / 15%); backdrop-filter: blur(8px); }
+.rg-memory-objective-icon { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 14px; color: #0759dc; background: #eff4ff; }
+.rg-memory-objective-icon svg { width: 25px; height: 25px; stroke-width: 2.2; }
+.rg-memory-eyebrow { display: block; margin-bottom: 5px; color: var(--rg-memory-muted); font-size: 10px; font-weight: 800; letter-spacing: .1em; }
+.rg-memory-objective strong { display: block; font-size: 17px; line-height: 1.35; }
+
+/* The region is the whole visible board box. It must never hide part of a timed cue, so
+   its height cap, the grid cap and the slab padding share one budget (see the tile-cap
+   comment). Desktop hides overflow; phones and short landscape screens keep auto scrolling
+   and the region aria-label reports which of the two is true at runtime. */
+.rg-memory-board-region { grid-area: board; display: grid; width: 100%; max-width: 100%; max-height: var(--rg-memory-board-cap); overflow: auto; overscroll-behavior: contain; border-radius: 17px; outline: none; }
+.rg-memory-slab { position: relative; display: grid; place-items: center; width: 100%; padding: 6px 0 12px; }
+/* The approved plate mounts the tiles on one carved stone slab in perspective: the back
+   edge is narrower, so the slab is tilted statically. The origin sits on the slab front
+   edge, so the projection can never grow wider than the region; the small lift re-centres
+   the foreshortened board. The transform is purely visual - browsers hit-test transformed
+   boxes exactly, and keyboard order is unaffected. */
+@media (min-width: 761px) {
+  .rg-memory-board-region { overflow: hidden; }
+  .rg-memory-slab { transform: perspective(950px) rotateX(10deg) translateY(-5.2%); transform-origin: 50% 100%; }
+  .rg-memory-grid { gap: var(--rg-memory-gap); border: 13px solid #b3a488; border-radius: 17px; background: linear-gradient(150deg, #a2947b, #87795f 58%, #6b6150); box-shadow: 0 6px 0 #8b7c62, 0 11px 0 #746750, 0 20px 30px rgb(28 34 24 / 30%), inset 0 2px 0 rgb(255 255 255 / 64%), inset 0 -3px 8px rgb(45 34 18 / 34%); }
+  .rg-memory-tile { border-radius: 9px; }
+}
+.rg-memory-board-region:focus-visible { outline: 3px solid #0759dc; outline-offset: 3px; }
+/* Columns must be sized by the container, not by the tile's intrinsic content, otherwise
+   1fr resolves to max-content and the board overflows its phone viewport.
+   Height budget for a square board: grid width (and therefore height) is
+   rows * tile + gaps + 16px of grid padding, the grid border adds 26px and the slab adds
+   18px of padding and the inter-tile gaps, so the tile cap subtracts 72px from the region cap. That keeps
+   scrollHeight == clientHeight and every timed cue inside the visible box. */
+.rg-memory-grid { position: relative; z-index: 1; --rg-memory-gap: 6px; --rg-memory-max-tile: calc((var(--rg-memory-board-cap) - 72px) / var(--rg-memory-rows, 3)); display: grid; grid-template-columns: repeat(var(--rg-memory-columns), minmax(0, 1fr)); grid-auto-rows: auto; width: min(100%, calc(var(--rg-memory-columns) * var(--rg-memory-max-tile) + (var(--rg-memory-columns) - 1) * var(--rg-memory-gap) + 16px)); min-width: 0; margin: auto; gap: var(--rg-memory-gap); padding: 8px; }
+/* Approved stone tile cutouts (plain / gold / teal) are the tile surface: weathered stone,
+   cracks, moss in the seams and the engraved diamond emblem are the approved artwork, so
+   they are not redrawn. Gold and teal swap the surface and add a raised halo plus a pip. */
+.rg-memory-tile { position: relative; display: grid; width: 100%; min-width: 0; min-height: 0; aspect-ratio: 1; place-items: center; overflow: hidden; border: 1px solid #8f8064; border-radius: 15px; padding: 5px; color: #21304a; background-color: #cdbfa5; background-image: var(--rg-memory-tile-plain); background-position: center; background-repeat: no-repeat; background-size: 100% 100%; box-shadow: 0 3px 0 #9b8d71, 0 6px 10px rgb(38 40 30 / 22%); cursor: pointer; }
+.rg-memory-tile::before { position: absolute; inset: 4px; border: 1px solid rgb(92 80 58 / 26%); border-radius: 11px; content: ''; pointer-events: none; }
+.rg-memory-tile::after { position: absolute; z-index: 0; inset: 10%; border-radius: 50%; content: ''; pointer-events: none; opacity: .82; background: radial-gradient(circle, transparent 0 25%, rgb(95 78 51 / 54%) 26% 28%, transparent 29% 43%, rgb(95 78 51 / 48%) 44% 46%, transparent 47%); mix-blend-mode: multiply; }
+.rg-memory-lit::after { background: radial-gradient(circle, transparent 0 25%, rgb(120 75 10 / 68%) 26% 28%, transparent 29% 43%, rgb(120 75 10 / 60%) 44% 46%, transparent 47%); }
+.rg-memory-lit-teal::after { background: radial-gradient(circle, transparent 0 25%, rgb(12 94 84 / 68%) 26% 28%, transparent 29% 43%, rgb(12 94 84 / 60%) 44% 46%, transparent 47%); }
+.rg-memory-tile:not(:disabled):hover { filter: brightness(1.05) saturate(1.04); }
+.rg-memory-tile:disabled { cursor: default; }
+.rg-memory-tile:focus-visible { z-index: 2; outline: 3px solid #0759dc; outline-offset: 3px; }
+.rg-memory-selected { filter: saturate(.68) brightness(.93); }
+.rg-memory-lit { background-image: var(--rg-memory-tile-gold); border-color: #9c6a1c; transform: translateY(-3px); box-shadow: 0 5px 0 #8a5c18, 0 0 0 3px rgb(255 213 106 / 34%), 0 12px 22px rgb(139 90 20 / 38%); }
+.rg-memory-lit-teal { background-image: var(--rg-memory-tile-teal); border-color: #12776f; box-shadow: 0 5px 0 #10645d, 0 0 0 3px rgb(126 244 228 / 32%), 0 12px 22px rgb(14 96 88 / 34%); }
+.rg-memory-lit-halo { position: absolute; inset: 6%; border: 3px solid rgb(255 214 116 / 66%); border-radius: 50%; box-shadow: 0 0 14px rgb(255 214 116 / 55%); pointer-events: none; }
+.rg-memory-lit-teal .rg-memory-lit-halo { border-color: rgb(126 244 228 / 62%); box-shadow: 0 0 14px rgb(126 244 228 / 52%); }
+/* Non-colour cue: the lit tile lifts, shows a halo and a pip. The assisted tone uses a
+   hollow pip, so gold and teal differ by shape as well as colour. */
+.rg-memory-lit-mark { position: absolute; top: 7px; left: 50%; width: 11px; height: 11px; border-radius: 50%; background: #2f2410; box-shadow: 0 0 0 2px rgb(255 255 255 / 86%); transform: translateX(-50%); }
+.rg-memory-lit-teal .rg-memory-lit-mark { background: transparent; box-shadow: inset 0 0 0 3px #062f2c, 0 0 0 2px rgb(255 255 255 / 86%); }
+.rg-memory-order { position: absolute; right: 7px; bottom: 7px; z-index: 1; max-width: calc(100% - 10px); border: 1px solid #d6b25a; border-radius: 999px; padding: 2px 7px; color: #493812; background: #fff7dc; font-size: 11px; font-weight: 800; line-height: 1.25; font-variant-numeric: tabular-nums; box-shadow: 0 1px 4px rgb(79 59 18 / 16%); }
+/* Ground contact: the slab sits on a plinth inside its own padding band, so the lip and
+   its shadow stay inside the region instead of adding layout overflow. */
+.rg-memory-plinth { position: absolute; right: 11%; bottom: 0; left: 11%; height: 10px; border-radius: 3px 3px 12px 12px / 3px 3px 7px 7px; background: linear-gradient(180deg, #7d7059, #554b3a 58%, #3f4a30); box-shadow: 0 9px 20px rgb(16 22 14 / 48%), inset 0 1px 0 rgb(255 255 255 / 22%), inset 0 -2px 3px rgb(24 30 18 / 45%); pointer-events: none; }
+
+/* The approved plate docks the phase, the sequence dots and the native controls on one
+   raised ivory plate, which keeps the controls legible over the busy grove artwork. */
+.rg-memory-dock { grid-area: dock; display: grid; justify-items: center; gap: 5px; width: min(560px, 100%); margin: 0 auto; border: 1px solid rgb(255 255 255 / 94%); border-radius: 26px; padding: 10px 20px 12px; background: rgb(255 254 250 / 94%); box-shadow: 0 10px 30px rgb(40 50 65 / 18%), inset 0 1px 0 #fff; }
+.rg-memory-dock-head { display: flex; align-items: center; gap: 12px; }
+.rg-memory-dock-label { color: #4c5870; font-size: 11px; font-weight: 800; letter-spacing: .16em; }
+.rg-memory-dots { display: inline-flex; align-items: center; gap: 7px; }
+.rg-memory-dot { width: 9px; height: 9px; border-radius: 50%; background: #d3cfc4; box-shadow: inset 0 1px 2px rgb(70 60 40 / 22%); }
+.rg-memory-dot.is-done { background: #d5a336; box-shadow: 0 0 0 2px rgb(213 163 54 / 22%); }
+.rg-memory-watch-status { display: flex; min-height: 22px; align-items: center; justify-content: center; gap: 8px; color: #3d4a63; font-size: 13px; font-weight: 700; text-align: center; }
+.rg-memory-watch-status svg { width: 17px; height: 17px; flex: none; color: #8d6c25; }
+.rg-memory-dock-note { margin: 0; color: #5b6479; font-size: 12px; font-weight: 600; text-align: center; }
+.rg-memory-controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 2px; }
+.rg-memory-action { display: inline-flex; min-width: 48px; min-height: 48px; align-items: center; justify-content: center; gap: 9px; border: 1px solid #d4d8e0; border-radius: 14px; padding: 0 16px; color: #1753ad; background: rgb(255 254 250 / 96%); box-shadow: 0 3px 0 rgb(185 190 199 / 58%); font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+.rg-memory-action svg { width: 18px; height: 18px; flex: none; }
+.rg-memory-action:hover:not(:disabled) { background: #f0f4fc; }
+.rg-memory-action:disabled { opacity: .5; cursor: default; }
+.rg-memory-action:focus-visible { outline: 3px solid #0759dc; outline-offset: 3px; }
+.rg-memory-retry { border-color: #0751c2; color: white; background: #0759dc; box-shadow: 0 3px 0 #073e91; }
+.rg-memory-retry:hover:not(:disabled) { background: #064cc2; }
+
+@media (max-width: 760px) {
+  .rg-memory-game { --rg-memory-board-cap: min(54dvh, 480px); }
+  .rg-memory-scene { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto; grid-template-areas: "objective" "board" "dock"; gap: 12px; min-height: auto; overflow: visible; border-radius: 17px; padding: 14px 12px; background-position: center 54%; }
+  .rg-memory-objective { grid-template-columns: 36px minmax(0, 1fr); gap: 10px; margin: 0; border-radius: 16px; padding: 11px 13px; }
+  .rg-memory-objective-icon { width: 36px; height: 36px; }
+  .rg-memory-eyebrow { margin-bottom: 2px; font-size: 9px; }
+  .rg-memory-objective strong { font-size: 14px; }
+  .rg-memory-board-region { max-height: var(--rg-memory-board-cap); }
+  .rg-memory-grid { --rg-memory-gap: 8px; --rg-memory-max-tile: calc((var(--rg-memory-board-cap) - 56px) / var(--rg-memory-rows, 3)); grid-auto-rows: auto; gap: var(--rg-memory-gap); border: 8px solid #b3a488; border-radius: 14px; padding: 6px; background: linear-gradient(150deg, #a2947b, #87795f 58%, #6b6150); box-shadow: 0 4px 0 #8b7c62, 0 10px 18px rgb(28 34 24 / 26%), inset 0 1px 0 rgb(255 255 255 / 55%); }
+  .rg-memory-tile { min-height: 44px; border-radius: 13px; }
+  .rg-memory-dock { border-radius: 20px; padding: 10px 14px 12px; }
+  .rg-memory-watch-status { font-size: 12px; }
+  .rg-memory-action { min-height: 48px; padding: 0 12px; }
+  .rg-memory-dock-note { font-size: 11px; }
+  .rg-memory-slab { transform: none; }
+  .rg-memory-plinth { right: 6%; left: 6%; }
+}
+
+/* Short landscape phones keep the two-column scene but fit every plan and cue on screen.
+   The instruction card is dropped here: the dock already carries the phase and the
+   instruction, and its height is what the 3x3 board needs for usable touch targets. */
+/* Short landscape phones put the dock beside the board instead of under it: at 375px tall
+   there is no vertical room for a usable 3x3 board plus a control plate, but there is width.
+   The instruction card is dropped here because the dock already carries the same phase. */
+@media (orientation: landscape) and (max-height: 560px) {
+  .rg-memory-scene { min-height: auto; grid-template-columns: minmax(0, 1fr) minmax(196px, 248px); grid-template-rows: minmax(0, 1fr); grid-template-areas: "board dock"; align-items: center; gap: 8px 16px; padding: 6px 12px; }
+  .rg-memory-objective { display: none; }
+  .rg-memory-board-region { max-height: none; }
+  /* No lift here: the region has no spare height in short landscape, so the projection
+     must stay anchored to the region box. */
+  .rg-memory-slab { transform: perspective(950px) rotateX(8deg); }
+  .rg-memory-grid { --rg-memory-gap: 6px; --rg-memory-max-tile: calc((100dvh - 204px) / var(--rg-memory-rows, 3)); border-width: 10px; padding: 4px; }
+  .rg-memory-tile { min-height: 40px; border-radius: 11px; }
+  .rg-memory-dock { width: 100%; margin: 0; border-radius: 16px; padding: 6px 10px 8px; gap: 3px; }
+  .rg-memory-dock-note { font-size: 10px; }
+  .rg-memory-watch-status { font-size: 11px; }
+  .rg-memory-action { min-height: 38px; padding: 0 10px; font-size: 12px; }
+  .rg-memory-dock-label { font-size: 10px; }
+}

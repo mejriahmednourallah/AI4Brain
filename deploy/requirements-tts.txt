@@ -1,0 +1,9 @@
+# ONNX-only runtime for the existing KittenTTS mini-0.8 model. KittenML is installed
+# separately with --no-deps: its metadata also lists the unrelated Torch/GPU backend.
+numpy==2.5.4
+soundfile==0.14.0
+onnxruntime==1.31.0
+phonemizer==3.4.0
+espeakng-loader==0.2.4
+huggingface-hub==2.2.0
+kitten-text-processing==0.1.0

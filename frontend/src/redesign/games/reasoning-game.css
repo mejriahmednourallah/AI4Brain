@@ -1,0 +1,152 @@
+.rg-reasoning-game, .rg-reasoning-game * { box-sizing: border-box; }
+.rg-reasoning-game { --rg-reasoning-ink: #221e15; --rg-reasoning-muted: #5b5546; --rg-reasoning-serif: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Times New Roman', serif; width: 100%; color: var(--rg-reasoning-ink); font-family: inherit; }
+.rg-reasoning-unavailable { display: grid; min-height: 140px; place-items: center; border: 1px solid #d7c7a7; border-radius: 17px; padding: 24px; color: #4e3d27; background: #fffaf0; text-align: center; }
+.rg-reasoning-unavailable p { margin: 0; }
+
+/* The approved atelier scene renders at its own saturation: no white wash over the art. */
+.rg-reasoning-scene {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  justify-items: center;
+  align-items: center;
+  gap: clamp(8px, 1.4dvh, 15px);
+  min-height: 0;
+  overflow: clip;
+  border-radius: 24px;
+  padding: clamp(12px, 2.2vw, 26px) clamp(12px, 3vw, 38px) clamp(12px, 1.8vw, 20px);
+  background: url('./assets/scene35.png') center 55% / cover;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 62%), 0 16px 42px rgb(47 63 85 / 13%);
+}
+
+/* Selected approved cutouts: crystal markers frame the atelier, they never carry item content. */
+.rg-reasoning-prop { position: absolute; z-index: 0; height: auto; opacity: .96; pointer-events: none; user-select: none; filter: drop-shadow(0 10px 14px rgb(24 32 46 / 24%)); }
+.rg-reasoning-prop-left { bottom: 0; left: clamp(-26px, -1.2vw, 2px); width: clamp(58px, 7vw, 104px); }
+.rg-reasoning-prop-right { top: 6%; right: clamp(-16px, -.6vw, 8px); width: clamp(46px, 5.6vw, 82px); }
+
+.rg-reasoning-heading {
+  z-index: 2;
+  justify-self: start;
+  max-width: min(100%, 520px);
+  border: 1px solid rgb(255 255 255 / 82%);
+  border-radius: 16px;
+  padding: 10px 16px 11px;
+  background: linear-gradient(170deg, rgb(255 253 245 / 95%), rgb(247 238 219 / 92%));
+  box-shadow: 0 8px 22px rgb(38 48 64 / 16%), inset 0 1px 0 #fff;
+  backdrop-filter: blur(6px);
+}
+.rg-reasoning-kicker { display: block; margin-bottom: 3px; color: #6c5730; font-size: 10px; font-weight: 800; letter-spacing: .17em; }
+.rg-reasoning-heading h1 { margin: 0; color: #241f14; font-family: var(--rg-reasoning-serif); font-size: clamp(20px, 2.1vw, 29px); font-weight: 600; letter-spacing: -.01em; line-height: 1.12; }
+.rg-reasoning-heading p { margin: 5px 0 0; color: #4f4a3a; font-size: 12.5px; line-height: 1.38; }
+
+/* Board: carved stone plaques seated in one mossy bronze plinth, standing on the floating slab. */
+.rg-reasoning-tablet { position: relative; z-index: 1; display: grid; width: min(100%, max(220px, calc(100dvh - 545px)), 520px); min-height: 0; place-items: center; align-self: center; }
+.rg-reasoning-tablet-base { position: absolute; z-index: 0; bottom: -7%; left: 50%; width: 128%; height: auto; transform: translateX(-50%); object-fit: contain; pointer-events: none; user-select: none; filter: drop-shadow(0 18px 22px rgb(28 34 22 / 30%)); }
+.rg-reasoning-tablet-frame { position: relative; z-index: 1; width: 100%; border: 3px solid #6a5a33; border-radius: 20px; padding: clamp(7px, .9vw, 12px); background: linear-gradient(160deg, #8d7a45, #4f4a2c 58%, #7d6a3c); box-shadow: 0 9px 0 #3f381f, 0 20px 30px rgb(24 30 20 / 34%), inset 0 0 0 2px #c6ad74; }
+
+.rg-reasoning-matrix { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); aspect-ratio: 1; gap: clamp(7px, .9vw, 11px); min-width: 0; min-height: 0; border-radius: 13px; background: radial-gradient(circle at 50% 50%, #3f3a22, #23200f); }
+.rg-reasoning-matrix-cell { position: relative; display: grid; min-width: 0; min-height: 0; place-items: center; overflow: hidden; border-radius: 11px; padding: clamp(6px, 1.3vw, 18px); }
+.rg-reasoning-cell-plaque { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; object-fit: fill; pointer-events: none; user-select: none; }
+.rg-reasoning-pattern-tile { position: relative; z-index: 1; display: block; width: min(100%, 260px); max-height: 100%; overflow: visible; }
+.rg-reasoning-missing { box-shadow: inset 0 0 0 2px rgb(196 154 79 / 70%); }
+.rg-reasoning-missing .rg-reasoning-cell-plaque { filter: brightness(.93) saturate(.82); }
+.rg-reasoning-question { position: relative; z-index: 1; display: grid; width: clamp(34px, 3.2vw, 48px); aspect-ratio: 1; place-items: center; border: 2px solid #8a6c33; border-radius: 50%; color: #4a3a1c; background: rgb(255 250 236 / 86%); font-family: var(--rg-reasoning-serif); font-size: clamp(20px, 2.2vw, 30px); font-weight: 700; line-height: 1; box-shadow: inset 0 2px 6px rgb(90 70 30 / 22%); }
+
+/* Brass bracket ornaments taken from the approved reasoning sheet, rotated to each corner. */
+.rg-reasoning-bracket { position: absolute; z-index: 2; width: clamp(34px, 3.4vw, 52px); height: auto; pointer-events: none; user-select: none; filter: drop-shadow(0 3px 5px rgb(30 24 10 / 32%)); }
+.rg-reasoning-bracket-top-left { top: -13px; left: -13px; }
+.rg-reasoning-bracket-top-right { top: -13px; right: -13px; transform: rotate(90deg); }
+.rg-reasoning-bracket-bottom-right { right: -13px; bottom: -13px; transform: rotate(180deg); }
+.rg-reasoning-bracket-bottom-left { bottom: -13px; left: -13px; transform: rotate(270deg); }
+
+.rg-reasoning-stud { position: absolute; z-index: 3; top: 50%; left: 50%; width: clamp(14px, 1.3vw, 19px); aspect-ratio: 1; transform: translate(-50%, -50%) rotate(45deg); border: 1px solid #4b3a12; background: linear-gradient(145deg, #f6e6b4, #b78a35 60%, #8a6423); box-shadow: 0 1px 3px rgb(20 16 6 / 40%); pointer-events: none; }
+
+.rg-reasoning-answer-shelf { position: relative; z-index: 2; display: grid; width: min(100%, 940px); justify-items: center; gap: clamp(6px, 1vw, 11px); }
+.rg-reasoning-shelf-heading { position: relative; display: grid; width: min(100%, 600px); justify-items: center; padding: 13px 44px 12px; text-align: center; }
+.rg-reasoning-shelf-plaque { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; object-fit: fill; pointer-events: none; user-select: none; filter: drop-shadow(0 6px 12px rgb(30 26 14 / 26%)); }
+.rg-reasoning-shelf-heading h2, .rg-reasoning-shelf-heading p { position: relative; z-index: 1; }
+.rg-reasoning-shelf-heading h2 { margin: 0; color: #241f14; font-family: var(--rg-reasoning-serif); font-size: clamp(15px, 1.5vw, 19px); font-weight: 600; line-height: 1.2; }
+.rg-reasoning-shelf-heading p { margin: 2px 0 0; color: #514a38; font-size: 11.5px; line-height: 1.3; }
+
+.rg-reasoning-choices { display: grid; width: 100%; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(7px, .8vw, 12px); }
+.rg-reasoning-choice { position: relative; display: grid; min-width: 0; min-height: clamp(76px, 9.6dvh, 106px); justify-items: center; align-content: center; gap: 1px; border: 0; border-radius: 13px; padding: 7px 10px 6px; color: var(--rg-reasoning-ink); background: transparent; font: inherit; cursor: pointer; transition: transform .14s ease, filter .14s ease; }
+.rg-reasoning-choice-plaque { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; object-fit: fill; pointer-events: none; user-select: none; filter: drop-shadow(0 6px 10px rgb(28 24 12 / 30%)); }
+.rg-reasoning-choice:hover:not(:disabled) { transform: translateY(-1px); }
+.rg-reasoning-choice:hover:not(:disabled) .rg-reasoning-choice-plaque { filter: brightness(1.05) drop-shadow(0 8px 12px rgb(28 24 12 / 32%)); }
+.rg-reasoning-choice:disabled { cursor: default; opacity: .82; }
+.rg-reasoning-choice:focus-visible, .rg-reasoning-retry:focus-visible { outline: 3px solid #0759dc; outline-offset: 3px; z-index: 2; }
+.rg-reasoning-choice-stone { position: relative; z-index: 1; display: grid; width: 100%; min-height: clamp(44px, 5.4dvh, 60px); place-items: center; }
+.rg-reasoning-choice .rg-reasoning-pattern-tile { width: min(100%, 158px); }
+.rg-reasoning-choice-id { position: relative; z-index: 1; display: grid; min-width: 26px; min-height: 22px; place-items: center; border: 1px solid #8f7433; border-radius: 7px; color: #3a2f13; background: linear-gradient(180deg, #f7e9bf, #dfc183); font-size: 13px; font-weight: 800; letter-spacing: .02em; }
+.rg-reasoning-choice-selected { outline: 3px solid #145ed0; outline-offset: 2px; }
+.rg-reasoning-choice-selected .rg-reasoning-choice-plaque { filter: brightness(1.07) saturate(1.05) drop-shadow(0 8px 14px rgb(20 60 140 / 38%)); }
+.rg-reasoning-choice-selected .rg-reasoning-choice-id { color: #fff; background: linear-gradient(180deg, #2f6bd8, #1450b4); border-color: #0d3c8a; }
+/* Selected state also carries a non-colour cue: an inner ring, not blue alone. */
+.rg-reasoning-choice-selected::after { position: absolute; z-index: 2; inset: 3px; border: 2px solid rgb(20 80 180 / 55%); border-radius: 10px; content: ''; pointer-events: none; }
+
+.rg-reasoning-retry { display: flex; min-width: 48px; min-height: 48px; align-items: center; justify-content: center; gap: 9px; border: 1px solid #074fc3; border-radius: 13px; padding: 0 17px; color: white; background: #0759dc; box-shadow: 0 3px 0 #073e91; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+.rg-reasoning-retry:disabled { opacity: .55; cursor: default; }
+.rg-reasoning-retry svg { width: 17px; height: 17px; }
+.rg-reasoning-state { margin: 0; border-radius: 999px; padding: 4px 14px; color: #33301f; background: rgb(255 251 238 / 94%); box-shadow: 0 2px 8px rgb(30 26 14 / 22%); font-size: 12.5px; font-weight: 650; text-align: center; }
+
+@media (max-width: 1100px) {
+  .rg-reasoning-tablet { width: min(100%, max(200px, calc(100dvh - 505px)), 420px); }
+  .rg-reasoning-shelf-heading { padding: 11px 34px 10px; }
+}
+
+@media (max-width: 760px) {
+  .rg-reasoning-scene { gap: 10px; min-height: 0; overflow: clip; border-radius: 17px; padding: 10px 9px 12px; background-position: 54% center; }
+  .rg-reasoning-prop-left { width: 54px; }
+  .rg-reasoning-prop-right { width: 44px; }
+  .rg-reasoning-heading { justify-self: stretch; padding: 9px 12px 10px; border-radius: 14px; }
+  .rg-reasoning-heading h1 { font-size: 20px; }
+  .rg-reasoning-heading p { font-size: 12px; }
+  .rg-reasoning-tablet { width: min(100%, 34dvh, 330px); }
+  .rg-reasoning-tablet-frame { border-width: 2px; border-radius: 16px; padding: 7px; box-shadow: 0 7px 0 #3f381f, 0 14px 22px rgb(24 30 20 / 30%), inset 0 0 0 1px #c6ad74; }
+  .rg-reasoning-bracket { width: 30px; }
+  .rg-reasoning-bracket-top-left { top: -9px; left: -9px; }
+  .rg-reasoning-bracket-top-right { top: -9px; right: -9px; }
+  .rg-reasoning-bracket-bottom-right { right: -9px; bottom: -9px; }
+  .rg-reasoning-bracket-bottom-left { bottom: -9px; left: -9px; }
+  .rg-reasoning-tablet-base { bottom: -6%; width: 124%; }
+  .rg-reasoning-shelf-heading { padding: 10px 22px 9px; }
+  .rg-reasoning-shelf-heading h2 { font-size: 15px; }
+  .rg-reasoning-shelf-heading p { font-size: 11px; }
+  .rg-reasoning-choices { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .rg-reasoning-choice { min-height: 80px; padding: 5px 8px; }
+  .rg-reasoning-choice-stone { min-height: 44px; }
+  .rg-reasoning-choice .rg-reasoning-pattern-tile { width: min(100%, 150px); }
+}
+
+/* Short landscape phones: board beside the compact prompt and answers so nothing hides below the fold. */
+@media (orientation: landscape) and (max-height: 560px) {
+  .rg-reasoning-scene { grid-template-columns: minmax(0, 40%) minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); grid-template-areas: "tablet heading" "tablet shelf"; align-items: start; gap: 6px 14px; min-height: 0; overflow: clip; border-radius: 14px; padding: 8px 10px; background-position: 54% center; }
+  .rg-reasoning-prop { display: none; }
+  .rg-reasoning-heading { grid-area: heading; max-width: none; justify-self: stretch; padding: 6px 10px 7px; border-radius: 11px; }
+  .rg-reasoning-kicker { margin-bottom: 1px; font-size: 8.5px; letter-spacing: .14em; }
+  .rg-reasoning-heading h1 { font-size: 15px; }
+  .rg-reasoning-heading p { margin-top: 2px; font-size: 10.5px; line-height: 1.28; }
+  .rg-reasoning-tablet { grid-area: tablet; width: min(100%, 55dvh); align-self: center; }
+  .rg-reasoning-tablet-frame { border-width: 2px; border-radius: 14px; padding: 5px; box-shadow: 0 6px 0 #3f381f, 0 12px 18px rgb(24 30 20 / 28%); }
+  .rg-reasoning-bracket { width: 24px; }
+  .rg-reasoning-bracket-top-left { top: -7px; left: -7px; }
+  .rg-reasoning-bracket-top-right { top: -7px; right: -7px; }
+  .rg-reasoning-bracket-bottom-right { right: -7px; bottom: -7px; }
+  .rg-reasoning-bracket-bottom-left { bottom: -7px; left: -7px; }
+  .rg-reasoning-tablet-base { display: none; }
+  .rg-reasoning-answer-shelf { grid-area: shelf; width: 100%; align-self: end; gap: 5px; }
+  .rg-reasoning-shelf-heading { width: 100%; padding: 7px 16px 6px; }
+  .rg-reasoning-shelf-heading h2 { font-size: 13px; }
+  .rg-reasoning-shelf-heading p { font-size: 10px; }
+  .rg-reasoning-choices { gap: 6px; }
+  .rg-reasoning-choice { min-height: 62px; padding: 3px 6px; border-radius: 10px; }
+  .rg-reasoning-choice-stone { min-height: 30px; }
+  .rg-reasoning-choice .rg-reasoning-pattern-tile { width: min(100%, 92px); }
+  .rg-reasoning-choice-id { min-width: 22px; min-height: 18px; font-size: 11px; }
+  .rg-reasoning-state { font-size: 11px; padding: 2px 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rg-reasoning-choice { transition: none; }
+}

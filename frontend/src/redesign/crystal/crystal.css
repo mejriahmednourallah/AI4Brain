@@ -1,0 +1,23 @@
+.crystal-game { --crystal-ink: #282a30; color: var(--crystal-ink); }
+.hy-page:has(.crystal-game) { width: 100%; max-width: none; padding: 12px 20px; }
+.crystal-game { gap: 8px; }
+.crystal-game > .hy-ghost { justify-self: start; }
+.crystal-game > .hy-panel { gap: 5px; padding: 12px; }
+.crystal-game > .hy-panel > .hy-eyebrow, .crystal-game h1, .crystal-game > .hy-panel > p { margin: 2px auto; padding: 5px 12px; }
+.crystal-game h1 { font-size: 26px; line-height: 1.15; }
+.crystal-game > .hy-panel { position: relative; isolation: isolate; overflow: hidden; padding: clamp(16px, 2vw, 28px); border: 1px solid #e8dfce; border-radius: 24px; background: url('../games/assets/scene35.png') center / cover; }
+.crystal-game > .hy-panel > .hy-eyebrow, .crystal-game h1, .crystal-game > .hy-panel > p { width: fit-content; max-width: 100%; margin: 8px auto; padding: 8px 16px; border-radius: 14px; background: #fffaf0f2; text-align: center; }
+.crystal-game .crystal-grid { width: min(100%, max(240px, calc(100dvh - 390px)), 510px); grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; margin: 12px auto 22px; padding: 10px; border: 3px solid #a48c52; border-radius: 15px; background: linear-gradient(135deg,#d4bd80,#60543b); box-shadow: 0 9px 0 #6e6248, 0 18px 32px #1f302b66; }
+.crystal-game .crystal-cell { min-width: 0; border: 0; border-radius: 10px; background: url('../games/assets/prepared/reasoning-plaque-square.png') center / 100% 100%; color: #5b4c32; font: 700 clamp(35px,5vw,68px) Georgia,serif; }
+.crystal-game .crystal-cell:last-child { border: 0; background: url('../games/assets/prepared/reasoning-plaque-square.png') center / 100% 100%; }
+.crystal-game .crystal-count { display: flex; flex-wrap: nowrap; width: 92%; max-width: none; justify-content: center; align-items: center; gap: 0; }
+.crystal-game .crystal-count img { width: min(29%, 42px); height: clamp(35px, 6vw, 76px); object-fit: contain; filter: drop-shadow(0 4px 3px #2b446677); }
+.crystal-game .crystal-choices { width: min(100%, 720px); margin: 14px auto 4px; padding: clamp(12px,2vw,22px); display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); border-radius: 24px; background: #fffaf0f5; box-shadow: 0 10px 25px #14283c33; }
+.crystal-game .crystal-choices .hy-primary { min-width: 0; min-height: 80px; padding: 8px; border: 2px solid transparent; border-radius: 14px; background: url('../games/assets/prepared/reasoning-plaque-wide.png') center / 100% 100%; box-shadow: 0 4px 5px #4e47312b; }
+.crystal-game .crystal-choices .hy-primary:hover { border-color: #1966ef; transform: translateY(-2px); }
+.crystal-game .crystal-choices .hy-primary:focus-visible { outline: 3px solid #155dfb; outline-offset: 3px; }
+.crystal-game .crystal-choices .crystal-count img { height: clamp(30px,4vw,58px); }
+.crystal-game [role='status'], .crystal-game .hy-error { width: min(100%,720px); margin: 18px auto; padding: 24px; border-radius: 20px; background: #fffaf0f7; }
+@media (max-width: 520px) { .crystal-game .crystal-grid { padding: 6px; gap: 3px; } .crystal-game .crystal-choices { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; } .crystal-game .crystal-choices .hy-primary { min-height: 72px; } }
+@media (max-height: 500px) and (min-width: 600px) { .crystal-game .crystal-grid { width: 300px; } .crystal-game .crystal-cell .crystal-count img { height: 44px; } }
+@media (prefers-reduced-motion: reduce) { .crystal-game .crystal-choices .hy-primary:hover { transform: none; } }

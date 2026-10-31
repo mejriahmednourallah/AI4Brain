@@ -1,0 +1,327 @@
+AI4BRAIN — Competition POC Specification v0.3
+Status: Proposed implementation specificationPrepared: 18 October 2026Phase 1 deadline: 1 November 2026Source: CISTAC 1.0 — AI4BRAIN, Cognitive Growth Agent (2-page challenge brief)
+0. Product thesis
+AI4BRAIN is a non-clinical, evidence-driven cognitive-growth demonstrator. A learner completes short exercises; an assessment engine creates a provisional performance profile; the system maintains a historical Cognitive Brain Twin; a Knowledge Brain connects exercises, dimensions, and coaching strategies; an AI coach explains the evidence and selects targeted practice; and one data model can be viewed through an Analytics or RPG dashboard.
+The distinctive demonstration is not the LLM alone: one observable attempt changes an auditable profile, an explainable, personalized next learning decision, and two visually different dashboards in a consistent way. Adaptive personalization is P0, mandatory for our POC, not a deferred research or polish feature.
+1. Scope decisions
+Decision
+POC choice
+Cognitive coverage
+Five task dimensions: working memory, reasoning, attention/inhibition, flexibility, planning
+Initial baseline duration
+Target 10–15 minutes, approximately 12 minutes
+Scope of knowledge
+Cognitive exercises and training strategies; no math, coding, or language curricula
+Profile
+Five percentage-based task-performance indices, each with an evidence count and uncertainty status
+Personalization
+P0 core differentiator: evidence-aware dimension selection, difficulty adjustment, error-targeted coaching, adaptive practice plan, history-sensitive decisions and inspectable rationales
+Personalization method
+Small, explicit scoring/policy modules with configurable heuristics; LLM supplies natural-language coaching but cannot unilaterally update scores or override policy
+Two brains
+(1) Knowledge Brain: exercise/dimension/strategy relationships. (2) Cognitive Brain Twin: per-learner estimates and evolution
+Dashboard
+Analytics and RPG; identical underlying scores, history and uncertainty
+Identity
+Single anonymous demo-user or local session identifier; no authentication
+Storage
+SQLite for canonical attempts/history; local Neo4j for the demonstrable graph; no Supabase
+Coaching
+One LLM API wrapper with an evidence-based context payload and structured response
+Optional extras
+Browser speech output first; optional emotion check-in; growth forecast only after adequate history
+Deferred
+Production security, auth, multi-user scaling, training a new RL/bandit model, complete psychometric validation, full automated test suite, comparative leaderboards
+Non-negotiable from brief: Layers A–C, historical Brain Twin, uncertainty-aware percentage profile, explainable coach, adaptive exercises and plan, radar/progress/heatmap/goals, 0–100 AI Collaboration Score with documented formula, optional media and a usable non-biometric mode, consent/retention/deletion policy. The brief does not enumerate the cognitive dimensions it refers to. These five are our design proposal, not an official mandated list.
+2. User journey and timing
+Step
+Expected time
+What happens
+Welcome and opt-in
+0:45
+Non-clinical notice, local storage notice, choose Analytics or RPG; skip camera and microphone
+Working memory
+2:00
+Spatial sequence recall
+Abstract reasoning
+2:30
+Nonverbal geometric rule patterns
+Attention and inhibition
+1:30
+Go/no-go responses
+Cognitive flexibility
+2:00
+Cue-guided rule switching
+Planning
+2:30
+Small minimum-move puzzles
+Provisional profile
+0:45
+Five dimensions, estimates, evidence counts and caveats
+Total
+12:00
+Shorter or longer depending on user pace
+After the baseline (outside the 12-minute assessment), the demo runs a targeted training exercise with coaching, then shows a profile update and an Analytics↔RPG dashboard switch.
+Baseline assessments use frozen item sets/parameters and no hints on scored trials. Training uses adaptive difficulty and optional hints. Reassessment, if shown, uses new but comparably configured items. No score is increased merely because a learner has read the AI's answer.
+3. Exercise specifications
+EX-01 — Spatial sequence recall / working memory
+Interaction: A 3×3 tile grid lights up in a sequence. User reproduces the order by clicking tiles.
+Baseline bank: 6 scored trials: two each at length 3, 4 and 5, shuffled within documented constraints; include 1 unscored practice example.
+Item generation: Deterministic seeded sequences with no immediate repeats; same baseline distribution across demo sessions.
+Capture: presented_sequence, selected_sequence, item length, item-level order match, per-position order match, response time, interruptions.
+Descriptive score: Percentage of correctly reproduced positions across the fixed baseline sequence set. Also show longest_fully_correct_span as a separate observation.
+Training adaptation: Gradually increase/decrease sequence length based on repeated full-sequence success; not a global cognitive diagnosis.
+Bias / limitation: Motor response, vision, display and familiarity can affect performance. A six-trial span task is a brief sample, not a validated working-memory capacity measurement.
+EX-02 — Geometric pattern reasoning / abstract reasoning
+Interaction: Choose the missing tile completing a 2×2 or simple 3×3 nonverbal shape pattern from 4 alternatives.
+Baseline bank: 6 scored items with explicit rule templates, e.g. shape count, rotation and alternating property; 1 unscored practice example.
+Item generation: Deterministic generator: valid rule, one correct answer, three plausible distractors; verify uniqueness of answer.
+Capture: rule_type, item version, candidate choices, selected choice, correctness, response time, error category where known.
+Descriptive score: 100 × correct_items / 6 (displayed as a preliminary task-set result).
+Training adaptation: Increase complexity only after success across different rule templates; rotate templates to reduce memorization.
+Bias / limitation: Visual pattern familiarity and language of instructions remain potential confounds. Do not reuse copyrighted commercial matrix-test materials.
+EX-03 — Go/no-go / attention and inhibition
+Interaction: Tap or press Space for a target color/shape; withhold response for non-target.
+Baseline bank: 40 scored trials (30 Go and 10 No-go), randomized with controlled ordering; 6 unscored practice trials.
+Timing: Fixed trial timing and response window; save trial stimulus timestamp, response timestamp and possible early presses.
+Capture: Hits, omissions, correct rejections, commission errors, median correct-Go reaction time, outliers, focus/visibility interruptions.
+Descriptive score: 50 × (hit_rate + correct_rejection_rate) with rates expressed from 0–1. This equal-weights Go and No-go rather than rewarding an always-pressing strategy.
+Training adaptation: Gradually vary response-window length or distractor frequency, but never compare those training scores directly with baseline without matching parameters.
+Bias / limitation: Browser/device latency, keyboard vs touch, motor ability and display refresh affect timing. Reaction times are secondary information, not a clinical attention diagnosis.
+EX-04 — Rule switching / cognitive flexibility
+Interaction: Match a target by color or shape based on a clearly displayed current rule. Rules sometimes switch.
+Baseline bank: 24 scored trials with about 8 switch trials and 16 repeat trials; practice establishes both rules before scoring.
+Item generation: Predeclared balanced switch schedule; avoid ambiguous stimuli that satisfy both rules.
+Capture: Rule on each trial, whether it switched, chosen option, correctness, response time, repeat-trial accuracy, switch-trial accuracy.
+Descriptive score: 50 × (switch_accuracy + repeat_accuracy) on 0–1 rates; display switch/repeat rates individually.
+Training adaptation: Adjust switch frequency or rule complexity after sufficient observations.
+Bias / limitation: Only eight switches provide limited precision. Instructions, attention and reading ability also influence performance; interpret the index as performance on this task.
+EX-05 — Minimum-move puzzles / planning
+Interaction: Solve three small state-transition puzzles by moving tokens under visible constraints. Show the goal but do not provide optimal moves during baseline.
+Baseline bank: 3 distinct, quick puzzles with comparable target complexity; show 1 simpler unscored tutorial puzzle.
+Item generation: Each puzzle state graph has a known shortest legal path calculated by BFS; all start/goal states are solvable.
+Capture: Move sequence, legal/illegal moves, total moves, completion, time, optimal solution length, restarts and undo actions.
+Descriptive score: For each completed puzzle, 100 × optimal_moves / actual_legal_moves (capped at 100); incomplete puzzles receive 0 for this simple POC index. Display completion and excess moves separately.
+Training adaptation: Recommend puzzles with slightly longer optimal paths or added constraints after repeated efficient completions.
+Bias / limitation: Three puzzles are much too few for a stable trait estimate. Familiarity with the interface and puzzle genre strongly matters. Label this result very preliminary.
+4. Evidence model — canonical event record
+Each scored or training trial creates an immutable attempt event in SQLite. A session summary and versioned score snapshot are derived from events; do not treat mutable graph edges as the only record.
+{  "event_id": "uuid",  "learner_id": "demo-user",  "session_id": "session-001",  "event_type": "assessment_trial_completed",  "phase": "baseline",  "dimension": "reasoning",  "exercise_id": "EX-02",  "exercise_version": "1.0.0",  "item_id": "reasoning-pattern-004",  "item_difficulty": "baseline-medium",  "trial_index": 4,  "response": { "choice": "C" },  "evaluation": {    "correct": true,    "error_type": null,    "scoring_version": "score-v1"  },  "timing": {    "stimulus_onset_ms": 1740.12,    "response_ms": 5382.44,    "response_time_ms": 3642.32  },  "interaction": {    "hint_count": 0,    "restart_count": 0,    "visibility_interrupted": false  },  "recorded_at": "2026-10-18T15:00:00Z"}
+Additional interaction events: coaching_message_sent, clarification_requested, ai_claim_questioned, suggestion_revised, independent_choice_made, dashboard_mode_changed, emotion_checkin_submitted, training_plan_generated, profile_snapshot_created, exercise_recommended, difficulty_changed, intervention_selected, training_plan_revised, dashboard_style_suggested.
+For every adaptation event persist policy_version, observed features, chosen action, alternatives considered (when practical), reason codes, outcome, and whether the event came from actual evidence or seeded demo data. This makes the differentiator auditable.
+Store session_id, timestamps, attempt IDs, selected answers, stimulus config/seed, scoring version, latency/interruptions and whether hints were given. Generate both the explanation and graph update from these stored observations, not from the LLM's free-text claim.
+5. Profile scoring and uncertainty policy
+A. What a percentage means
+A score is a 0–100 task-performance index, explicitly labeled with its exercise family. It is not a percentile relative to other people, a percentage of intelligence, an IQ estimate, or a clinically validated cognitive trait.
+Initial task-specific indices:
+Dimension
+Initial display index
+Working memory
+Correct positions / shown positions × 100
+Reasoning
+Correct patterns / 6 × 100
+Attention/inhibition
+Mean of Go hit rate and No-go correct-rejection rate × 100
+Cognitive flexibility
+Mean of repeat-trial and switch-trial accuracy × 100
+Planning
+Mean of optimal/actual move efficiency for three puzzles, failed = 0
+These indices are not cross-dimension equivalent. A 70 in memory does not prove better ability than a 60 in planning. The radar view is a within-task summary visualization, not a general cognitive ranking.
+B. Uncertainty, honestly represented
+The POC should always display an evidence count and a status such as PRELIMINARY — HIGH UNCERTAINTY, together with the assumption behind that status.
+For sets of comparable independent correct/incorrect trials at fixed difficulty (e.g. 6 reasoning items), the prototype may additionally show a simple Beta(1 + successes, 1 + failures) posterior interval. Label it model-based, conditional on exchangeable trials; not psychometric validation. For attention and switching, keep the component rates separate (Go vs No-go; switch vs repeat), and avoid calling a hand-combined interval a validated interval. For planning, three efficiency results do not justify a narrow numeric interval: display insufficient evidence for reliable interval next to the percentage.
+If a trial is interrupted, exclude it from scored baseline summaries and flag why. Use fixed baseline parameters for interpretability. Do not infer emotional state from reaction time or mistakes.
+C. Historical update rule
+Insert raw event in SQLite.
+Recompute task-specific summary and uncertainty/evidence indicators using a versioned scorer.
+Save a new immutable profile_snapshot with supporting event IDs.
+Update the derived Neo4j learner-to-dimension summary relationships.
+Tell the coach exactly what changed and why; never allow the LLM to overwrite results.
+6. Two-brain graph model
+Knowledge Brain (shared)
+Nodes: CognitiveDimension, ExerciseType, ExerciseItem, TrainingStrategy, MisconceptionPattern (optional).Relationships: (ExerciseType)-[:ASSESSES]->(CognitiveDimension), (TrainingStrategy)-[:TARGETS]->(CognitiveDimension), (ExerciseItem)-[:INSTANCE_OF]->(ExerciseType), (TrainingStrategy)-[:ADDRESSES]->(MisconceptionPattern).
+Cognitive Brain Twin (per demo user)
+Nodes: Learner, DimensionEstimate, ProfileSnapshot, EvidenceSummary, PracticeGoal.Relationships: (Learner)-[:HAS_ESTIMATE]->(DimensionEstimate), (DimensionEstimate)-[:FOR_DIMENSION]->(CognitiveDimension), (ProfileSnapshot)-[:CAPTURES]->(DimensionEstimate), (DimensionEstimate)-[:SUPPORTED_BY]->(EvidenceSummary), (Learner)-[:PREFERS_DASHBOARD]->(DashboardStyle).
+For the 2-week POC, these can be two logical subgraphs in one Neo4j instance, with SQLite holding canonical raw events. Populate a small curated graph; no automatic curriculum ingestion.
+7. Required advanced personalization — P0 engine v1
+Scope correction (18 Oct 2026): personalization is required for the POC's identity and demonstration. We defer training sophisticated new models, not the ability to make nuanced, individualized, evidence-linked decisions. This engine is a deterministic/statistical component consumed by the coach, the two brains, and the dashboards.
+7.1 Five personalization mechanisms that must work
+Mechanism
+Personalized inputs
+Observable output
+Demo acceptance
+Evidence-aware cognitive profiling
+Baseline trials, fixed task configuration, evidence counts, interruptions, prior snapshots
+Five task-specific estimates with uncertainty and evolution
+New valid trials update the correct dimension; low evidence is visibly provisional
+Target dimension / exercise selection
+Performance gap, uncertainty, practice recency, user goal, task coverage, current session
+Next exercise or mini-assessment plus a rationale
+Two different profiles lead to different justified choices
+Adaptive difficulty
+Repeated trial success, item tier, hints, interruptions, recent errors
+Raise / lower / hold within the same exercise family
+A real attempt sequence produces at least one justified change
+Error-specific coaching
+Recorded error type, previous interventions, task family, user question
+Explanation / hint / strategy tied to observed error
+A changed error pattern changes the proposed coaching strategy
+Evolving practice plan
+New scores, uncertainty, goal, completed activities, fatigue check-in, previous plan
+Ranked 2–4 activities with an explanation of changes
+Completing training revises the plan or explicitly explains why it remains unchanged
+Dashboard mode selection is a presentation preference, not a cognitive assessment. The user chooses Analytics/RPG and can switch at any time. We may suggest a layout based on observed preferences, but never infer a stable psychological 'type'.
+7.2 Decision policy: assess versus train
+Separate missing evidence from observed difficulty. The decision starts with a gate:
+If no usable baseline or very little valid evidence exists for a dimension, select an additional assessment before recommending targeted cognitive training for a supposed weakness.
+If evidence is usable, choose a training exercise according to a documented priority rule.
+Occasionally revisit well-performing or under-sampled dimensions to prevent a permanent focus on one weakness. For the POC, pick the least recently visited dimension every fourth adaptive selection (configurable).
+Respect a fixed task availability list, session time budget and the learner's explicit preferences. Do not generate unvalidated assessment items on demand.
+Initial training-priority heuristic (not scientifically validated): for dimensions with usable evidence, compute features on [0,1]:
+priority = 0.40 × performance_gap + 0.25 × user_goal_weight + 0.20 × practice_recency + 0.15 × uncertainty_need
+performance_gap: 1 minus the within-task normalized performance index, only relative to that exercise family. This is a scheduling heuristic, not a comparison of people's general cognitive abilities.
+user_goal_weight: declared focus chosen by user; defaults to neutral.
+practice_recency: increases if a dimension has not been practiced recently.
+uncertainty_need: drives a decision to gather more evidence, not a claim of weak ability. If uncertainty is extreme, prefer an assessment task instead.
+Save feature values and selected rule version alongside each recommendation. Coefficients are starting implementation choices; report them as heuristic and tune only against observable demo behavior, not claims of clinical validity.
+7.3 Difficulty controller
+For training mode only, maintain a recent window of four eligible, comparable, unassisted trials in the same task family and tier:
+Evidence window
+Next action
+At least 3 of 4 successful, no hints
+Increase one tier if available
+At most 1 of 4 successful
+Decrease one tier, or keep the tier and offer a targeted hint if already at minimum
+2 of 4 successful, too few trials, or many interruptions
+Hold difficulty and gather more evidence
+A change requires a traceable difficulty_changed event with old/new tier and supporting attempts. Never apply the same thresholds across different tasks without task-specific success definitions. Baseline assessments remain fixed and uncoached.
+7.4 Error-to-coaching strategy map
+Observed task evidence
+Candidate strategy
+Explanation grounded in
+Spatial recall: position/order swaps
+Chunk sequence into small groups in training
+Order mismatches and successful span
+Reasoning: wrong rule-template selection
+Compare candidate rules with one contrasting example
+Incorrect selected pattern and template type
+Go/no-go: elevated commission errors
+Slower training pace and target-versus-distractor reminder
+Recorded No-go responses; do not label learner impulsive
+Rule switch: repeatedly follows previous rule
+Explicit transition cue and short switch practice
+Switch-trial versus repeat-trial error pattern
+Planning: legal but inefficient move sequence
+Coach toward subgoals rather than revealing solution
+Excess moves versus shortest-path solution
+The LLM may phrase and tailor the coaching, but a backend validator controls which evidence IDs, task IDs and strategies it may refer to. Store intervention_selected, subsequent result and whether the learner requested or ignored a hint.
+7.5 Adaptive plan contract
+A TrainingPlan contains: plan_id, profile_snapshot_id, policy_version, goal, created_at, recommended_steps[], estimated_time_minutes, and reason_codes[]. Each step has: dimension_id, exercise_type_id, difficulty_tier, strategy_id (optional), selection_reason, source_evidence_ids, and status.
+Generate a short, actionable 2–4-step plan; revise after meaningful new evidence. When an estimate has not changed, say why rather than fabricating progress. The last plan is retained in history so a jury can compare 'before' and 'after'.
+7.6 Personalization demonstration scenarios
+Scenario A: Reasoning evidence is reasonably complete but performance is low at a specific tier. Select an intermediate reasoning exercise and a rule-comparison strategy.
+Scenario B: Planning result is low but based on only three puzzles. Prioritize another planning assessment instead of asserting weak planning ability.
+Scenario C: Four eligible training trials have high success without hints. Raise the relevant task tier; show the exact rule, inputs and previous tier.
+Scenario D: User switches Analytics to RPG. All cognitive data and recommendations remain unchanged; only their presentation differs.
+7.7 Lightweight implementation and guardrails
+Use plain Python profile_service.py, selector.py, difficulty.py, strategy.py, and plan_service.py behind FastAPI. Store policy configuration as a versioned JSON/Python constant; persist event and recommendation history to SQLite; mirror only useful relationships to Neo4j. No reinforcement learning, no training pipeline, no personalization microservices.
+Minimum smoke checks (not a formal testing workstream): deterministic re-score of one saved attempt set; insufficient-evidence case; four-trial difficulty promotion/demotion; two-profile divergent recommendation; dashboard mode invariance; recovery when the LLM is unavailable. These are essential to a reliable live demo.
+8. Coach, collaboration score, and dashboard
+Coach
+Input is a controlled summary: latest evidence, uncertainty, error history, relevant exercises/strategies from the Knowledge Brain, the personalization engine's selected intervention and reason codes, and valid next actions. Output JSON contains {observation, explanation, recommended_exercise_id, recommended_difficulty, rationale, caveat}. The server checks recommendation IDs/difficulty ranges; the coach may propose alternatives, but cannot change task scores, verified evidence, or adaptation decisions directly. Text-only coaching must work independently of voice features.
+Natural collaboration score
+Capture opportunities for clarification (20%), critical verification (25%), iteration (20%), autonomy (20%), responsible use (15%). Score a dimension only when there has been a genuine opportunity to exhibit the behavior. Initially provide not enough collaboration evidence if there are too few events. Once enough exists, calculate a 0–100 weighted score with transparent event references; never equate high message count with good collaboration. The brief's weights are explicitly a proposal, not validated.
+Dashboards
+Analytics: radar of five preliminary indices; historical progress line chart; heatmap of completed activities; goal; uncertainty/evidence drill-down; collaboration score when available.
+RPG: same data, shown through quests, XP for completing practice, levels and a skill tree. XP is not a cognitive score. A small link shows the underlying evidence and uncertainty.
+Switch between modes without recalculating estimates. No real peer percentile/leaderboard without a justified comparison sample.
+9. UI screens to prototype first
+Screen
+Must show
+Demo action
+Welcome
+Non-clinical notice, start button, Analytics/RPG preference, local-data explanation
+Start anonymous session
+Assessment shell
+Timer/progress, clear instructions, responsive interaction canvas
+Complete a scored trial
+Brain Twin overview
+Five indices, uncertainty, latest evidence, progress graph
+Open evidence for one dimension
+Knowledge Graph explorer
+Nodes linking dimension ↔ task ↔ strategy
+Click recommended relationship
+Coach / training
+Error-aware explanation, personalized strategy, next task, difficulty reason, optional hints
+Complete a guided trial; watch strategy/difficulty react
+Dashboard toggle
+Analytics ↔ RPG styles
+Switch presentation without changing scores
+Use a simple React + Vite frontend, FastAPI backend, SQLite file and Neo4j Docker service. One process for each suffices. Add voice later only if the core demonstration is stable.
+10. Lean demo narrative (3–5 minutes)
+(0:00–0:30) Introduce the challenge and the two-brain difference.
+(0:30–1:15) Do a real quick exercise, not a screen recording of fabricated scores.
+(1:15–1:55) Show five-dimension profile and evidence/uncertainty drill-down. Existing demonstration history may be seeded but must be labeled sample data.
+(1:55–2:35) Open the knowledge graph and explain why a strategy/exercise was selected.
+(2:35–3:20) Show different personalized decisions for two evidence profiles; chat naturally with the coach, question one suggestion and show collaboration evidence.
+(3:20–4:00) Complete training, show an evidence-backed difficulty/plan adjustment, then toggle Analytics↔RPG without changing the scores.
+(4:00–4:30) Summarize limitations and optional voice/prediction if legitimately functioning.
+Key differentiator to prove on camera: attempt → recorded evidence → updated estimate/history → personalized exercise + coaching strategy + difficulty → revised plan → Analytics/RPG views of identical underlying data.
+11. Build order — cut scope aggressively
+Order
+Vertical slice
+Done when
+1
+React exercise shell + SQLite events
+One scored reasoning item persists and is replayable
+2
+All five baseline exercises
+User can complete the 10–15-minute battery
+3
+Score summaries + history
+Five indices and uncertainty flags appear correctly
+4
+Neo4j two-brain seeded graph
+An exercise/evidence result changes a Brain Twin relationship and is inspectable
+5
+Personalization P0
+Two profiles cause different evidence-backed exercise selections; real attempts change difficulty; error pattern changes strategy; plan revisions are persisted
+6
+Explainable coach
+The coach explains real evidence and the selected strategy; backend rejects unsupported score/plan changes
+7
+Analytics + RPG
+Both modes show the same values from one API response
+8
+Collaboration and minimal bonuses
+At least one natural coaching event contributes explainable evidence; add voice only if safe to do so
+9
+Demo video + report + public repository
+Meets submission requirements
+Do not prioritize: login, Supabase, paid cloud hosting, multi-tenant access, queue workers, a large content ingestion pipeline, a new trained ML personalization model, a formal statistical validation study, or a large automated QA framework. Still perform brief manual scoring and demo smoke checks so judges don't see inconsistent results.
+12. Risks and scientific claims we will not make
+Five short exercises cannot establish a validated cognitive/personality profile. The first profile is a set of provisional task-performance indicators.
+The five percentages are not inherently comparable across tasks. Our dashboard must disclose this and avoid an overall 'intelligence score'.
+Confidence intervals can be misleading with adaptive trials, tiny samples and unknown item equivalence. Use fixed baseline items and visibly label assumptions; prefer 'insufficient evidence' when appropriate.
+Training improvements are not proof of far transfer into school performance, work performance, or general intelligence.
+Browser reaction times are affected by hardware/software. Record conditions, interpret cautiously.
+Personality labels inferred from short interactions are weak. Dashboards represent user preferences, not fixed psychological types.
+No AI-generated answer or coach judgment may directly change validated-by-code scores.
+Demo history must be labeled sample/seeded where it is not collected from actual sessions.
+13. Official submission constraints
+Phase 1 preselection deadline: 1 November 2026. Final pitch: 7 November 2026 (8-minute presentation and 5-minute Q&A, with a surprise element revealed one day before). Team: generally 2–4 people, with documented membership exceptions. Official submission language: English; public GitHub repo; 3–5-minute demo video; technical report maximum 8 pages; presentation maximum 15 slides. The brief refers to a submission link but does not include a usable URL.
+14. Immediate implementation tickets
+☐ Define TrialEvent, ProfileSnapshot, ExerciseConfig schemas.
+☐ Build AssessmentShell with progress and interruptions tracking.
+☐ Implement EX-02 reasoning first as a scored end-to-end slice.
+☐ Save item attempts into events table in local SQLite.
+☐ Build scoring function from events and version its output.
+☐ Display first evidence-linked profile card (without overstating meaning).
+☐ Seed Knowledge Brain graph nodes and relationships in Neo4j.
+☐ Implement remaining EX-01, EX-03, EX-04, EX-05 in parallel where possible.
+☐ Implement P0 personalization engine: assess-versus-train gate, dimension selector, four-trial difficulty controller, error-to-strategy mapping, and versioned plan revision.
+☐ Persist RecommendationEvent/difficulty_changed/intervention_selected with evidence references and policy version.
+☐ Add two contrasting demo profiles to prove individualized decisions (mark any seeded history as sample data).
+☐ Integrate the LLM coach against the personalization service after the event contract stabilizes.
+☐ Add the Analytics/RPG dashboard switch.
+Next architecture decision: implement the five exercises as independent React components sharing one ExerciseConfig + TrialEvent contract, so the same P0 personalization engine can consume all five task types. The recommendation engine must operate on structured evidence, not raw chat text. If experiment timing proves troublesome, jsPsych remains a possible replacement for selected trials. For this tight POC, bespoke components with a shared contract are likely the fastest path; jsPsych remains a reasonable alternative if browser experiment timing proves troublesome.

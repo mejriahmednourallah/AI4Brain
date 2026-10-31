@@ -1,0 +1,95 @@
+name: ai4brain
+
+services:
+  web:
+    image: ai4brain-web:local
+    build:
+      context: .
+      dockerfile: deploy/web.Dockerfile
+    ports:
+      - '127.0.0.1:${AI4BRAIN_HTTP_PORT:-8080}:8080'
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      test: ['CMD', 'wget', '-q', '-O', '/dev/null', 'http://127.0.0.1:8080/healthz']
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  api:
+    image: ai4brain-api:local
+    build:
+      context: .
+      dockerfile: deploy/api.Dockerfile
+    environment:
+      AI4BRAIN_DB: /var/lib/ai4brain/ai4brain.sqlite3
+      AI4BRAIN_TTS_CACHE: /var/cache/ai4brain/tts
+      HF_HOME: /var/cache/ai4brain/huggingface
+      NEO4J_ENABLED: 'true'
+      NEO4J_URI: bolt://neo4j:7687
+      NEO4J_USER: neo4j
+      NEO4J_PASSWORD: ${NEO4J_PASSWORD:?Set NEO4J_PASSWORD in .env before starting Compose}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      GROQ_MODEL: ${GROQ_MODEL:-openai/gpt-oss-20b}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-3.8-flash}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-}
+      LLM_BASE_URL: ${LLM_BASE_URL:-https://api.openai.com/v1}
+      AI4BRAIN_CORS_ORIGINS: http://localhost:${AI4BRAIN_HTTP_PORT:-8080},http://127.0.0.1:${AI4BRAIN_HTTP_PORT:-8080}
+      OMP_NUM_THREADS: ${AI4BRAIN_CPU_THREADS:-2}
+    volumes:
+      - app_data:/var/lib/ai4brain
+      - model_cache:/var/cache/ai4brain
+    depends_on:
+      neo4j:
+        condition: service_healthy
+    restart: unless-stopped
+    init: true
+    stop_grace_period: 30s
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      test: ['CMD', 'python', '-c', "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=4)"]
+      interval: 15s
+      timeout: 5s
+      retries: 8
+      start_period: 20s
+
+  neo4j:
+    image: neo4j:5.26-community
+    ports:
+      - '127.0.0.1:${AI4BRAIN_NEO4J_HTTP_PORT:-7475}:7474'
+      - '127.0.0.1:${AI4BRAIN_NEO4J_BOLT_PORT:-7688}:7687'
+    environment:
+      NEO4J_AUTH: neo4j/${NEO4J_PASSWORD:?Set NEO4J_PASSWORD in .env}
+      NEO4J_server_memory_heap_initial__size: 256m
+      NEO4J_server_memory_heap_max__size: 512m
+      NEO4J_server_memory_pagecache_size: 256m
+      NEO4J_server_bolt_advertised__address: localhost:${AI4BRAIN_NEO4J_BOLT_PORT:-7688}
+      NEO4J_server_http_advertised__address: localhost:${AI4BRAIN_NEO4J_HTTP_PORT:-7475}
+    volumes:
+      - neo4j_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -q -O /dev/null http://localhost:7474 || exit 1']
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+volumes:
+  app_data:
+  model_cache:
+  neo4j_data:
