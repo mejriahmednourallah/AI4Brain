@@ -2,9 +2,9 @@
 
 AI4BRAIN is a **non-clinical cognitive practice prototype** connecting five short task families to an evidence-based profile, an explorable Brain Twin, personalized plans and an AI companion. Its core loop is **attempt → recorded evidence → understandable feedback → adaptive practice → review**.
 
-![Shifting Market practice activity in AI4BRAIN](docs/images/shifting-market-synthetic.png)
+![AI4BRAIN desktop home showing five practice worlds](docs/images/home-synthetic.png)
 
-*Actual application screen from an isolated synthetic QA session. The shapes and results are example data, not participant records.*
+*Desktop application screen from an isolated synthetic QA session. Progress and results are example data, not participant records.*
 
 > **For the jury:** Begin with the quick start and walkthrough below. The app produces preliminary task observations—not diagnoses, IQ scores, normative percentiles or proof of cognitive improvement. This is a work in progress; limitations are stated below.
 
@@ -93,6 +93,25 @@ Interrupted attempts are auditable and excluded from eligible scored slots. Prac
 | Crystal Reasoning | A separate versioned 3×3 visual pattern form |
 
 Plans can include eligible activities later in the journey. Attempts, outcomes and assistance events are versioned; hybrid and Crystal outcomes remain separate from the five baseline indices. A synthetic API matrix exercises individual plan launches and completion projections; it is not evidence of every real-world recovery scenario.
+
+### Explore the activities
+
+These are **actual desktop application captures from isolated synthetic QA sessions**. They show different points in the activities, not a single continuous learner journey.
+
+<table>
+  <tr>
+    <td width="50%"><strong>Courier's Promise</strong><br><img src="docs/images/courier-synthetic.png" alt="Courier's Promise route-planning activity" width="100%"></td>
+    <td width="50%"><strong>Tidekeeper</strong><br><img src="docs/images/tidekeeper-synthetic.png" alt="Tidekeeper position and symbol comparison activity" width="100%"></td>
+  </tr>
+  <tr>
+    <td width="50%"><strong>Shifting Market</strong><br><img src="docs/images/shifting-market-synthetic.png" alt="Shifting Market rule-changing sorting activity" width="100%"></td>
+    <td width="50%"><strong>Living Archive</strong><br><img src="docs/images/archive-synthetic.jpg" alt="Living Archive saved arrangement and clue review" width="100%"></td>
+  </tr>
+</table>
+
+**Bridge Council** combines route planning with advice and constraint review:
+
+![Bridge Council route planning activity](docs/images/bridge-council-synthetic.png)
 
 ## What judges can inspect
 
